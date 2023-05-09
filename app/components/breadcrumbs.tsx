@@ -25,7 +25,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
   return location.pathname !== "/" ? (
     <nav
       aria-label="Breadcrumb"
-      className={`container mx-auto flex py-0.5 px-1.5 font-body lowercase text-sm bg-neutral-800 ${
+      className={`container mx-auto flex pt-0.5 pb-1.5 px-1.5 font-body lowercase text-sm ${
         className || ""
       }`}
     >
@@ -33,7 +33,9 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
         {breadcrumbItems.map((item, index) => (
           <li
             key={index}
-            className="flex items-center opacity-30 dark:text-neutral-300 dark:opacity-50 hover:underline hover:dark:opacity-70"
+            className={`flex items-center opacity-30 dark:text-neutral-300 dark:opacity-50 hover:underline hover:dark:opacity-70 ${
+              location.pathname === item.to ? "underline" : ""
+            }`}
           >
             <a href={item.to} className="text-sm font-medium">
               {item.label}
