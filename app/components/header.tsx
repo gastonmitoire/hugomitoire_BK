@@ -2,7 +2,7 @@ import React from "react";
 
 export function Header() {
   return (
-    <header className="container mx-auto flex items-center justify-between w-full h-16 bg-white dark:bg-neutral-900">
+    <header className="container mx-auto flex items-center justify-between w-full h-[10vh] bg-white dark:bg-neutral-900">
       <div className="flex-1 flex items-center">
         <nav>
           <ul className="flex items-center gap-6 text-sm font-medium">
