@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  username     String    @unique
+  email        String    @unique
+  passwordHash String
+  role         String    @default("USER")
+  profile      Profile?
+  images       Image[]
+  comments     Comment[]
+}
+
+model Profile {
+  id          String        @id @default(uuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  bio         String?
+  image       String?
+  displayName String?
+  firstName   String?
+  lastName    String?
+  dateOfBirth DateTime?
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String        @unique
+  settings    UserSettings?
+}
+
+model UserSettings {
+  id                 String   @id @default(uuid())
+  profile            Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId          String   @unique
+  emailNotifications Boolean  @default(true)
+  theme              String   @default("dark")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Book {
+  id              String    @id @default(uuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  title           String
+  description     String
+  type            String
+  publicationDate DateTime
+  cover           String
+  secondaryImage  String
+  genre           Genre     @relation(fields: [genreId], references: [id])
+  genreId         String
+  chapters        Chapter[]
+  comments        Comment[]
+}
+
+model Image {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  url       String
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  comments  Comment[]
+}
+
+model Chapter {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  type      String?
+  order     Int
+  book      Book     @relation(fields: [bookId], references: [id])
+  bookId    String
+  text      Text[]
+}
+
+model Text {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String
+  title     String?
+  type      String?
+  image     String?
+  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+  chapterId String
+}
+
+model Genre {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  nameSlug  String   @unique
+  ageRange  String
+  books     Book[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  text      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  book      Book?    @relation(fields: [bookId], references: [id])
+  bookId    String?
+  image     Image?   @relation(fields: [imageId], references: [id])
+  imageId   String?
+}
