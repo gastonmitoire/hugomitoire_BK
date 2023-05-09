@@ -22,8 +22,7 @@ export default function Libros() {
   const bookListItems = data.bookListItems;
 
   return (
-    <div className="container mx-auto h-[90vh]">
-      <h1 className="text-lg text-secondary uppercase pb-10 pt-3">Libros</h1>
+    <div className="container mx-auto h-[90vh] py-3">
       <Outlet />
     </div>
   );

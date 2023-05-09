@@ -10,9 +10,11 @@ import {
   ScrollRestoration,
   useRouteError,
 } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 import stylesheet from "./tailwind.css";
 import globalStylesheet from "~/styles/global.css";
 
+import { Breadcrumbs } from "~/components/breadcrumbs";
 import { Document } from "~/components/document";
 import { Header } from "~/components/header";
 
@@ -32,9 +34,11 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export default function App() {
+  const { pathname } = useLocation();
   return (
     <Document>
       <Header />
+      <Breadcrumbs />
       <Outlet />
       <ScrollRestoration />
     </Document>
