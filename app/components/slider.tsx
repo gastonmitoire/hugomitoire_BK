@@ -16,6 +16,7 @@ export function Slider<T>({
   renderItem,
   autoPlay,
 }: SliderProps<T>) {
+  const [reset, setReset] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const length = items.length;
 
@@ -23,19 +24,28 @@ export function Slider<T>({
     const newIndex = currentIndex === length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
     onChange(newIndex);
+    handleReset();
   }
 
   const handleAutoPlay = useCallback(() => {
     const newIndex = currentIndex === length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
     onChange(newIndex);
+    handleReset();
   }, [currentIndex, length, onChange]);
+
+  function handleReset() {
+    setReset(true);
+    setTimeout(() => {
+      setReset(false);
+    }, 100);
+  }
 
   useEffect(() => {
     if (autoPlay) {
       const interval = setInterval(() => {
         handleAutoPlay();
-      }, 30000);
+      }, 15000);
       return () => clearInterval(interval);
     }
   }, [autoPlay, handleAutoPlay]);
@@ -43,7 +53,7 @@ export function Slider<T>({
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       <div className="flex h-full w-full">
-        <ProgressBar timeout={30000} />
+        <ProgressBar timeout={15000} reset={reset} />
       </div>
       <AnimatePresence>
         <motion.div
@@ -88,7 +98,7 @@ export function Slider<T>({
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-10 h-10 dark:stroke-neutral-700 group-hover:dark:stroke-neutral-300"
+          className="w-10 h-10 -rotate-90 transition-transform ease-in duration-300 dark:stroke-neutral-700 group-hover:rotate-0 group-hover:dark:stroke-neutral-300"
         >
           <path
             strokeLinecap="round"
