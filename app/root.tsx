@@ -38,7 +38,6 @@ export default function App() {
   return (
     <Document>
       <Header />
-      <Breadcrumbs />
       <Outlet />
       <ScrollRestoration />
     </Document>

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
 
 import { Button } from "./button";
 
@@ -54,7 +55,7 @@ export function BookCard({
               {description}
             </p>
             <Button color="primary" size="large" className="self-end">
-              Ver Libro
+              <Link to={"libros/" + title.replace(/ /g, "_")}>Ver Libro</Link>
             </Button>
           </div>
         </motion.div>
