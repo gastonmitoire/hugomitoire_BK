@@ -32,22 +32,24 @@ export default function LibrosIndex() {
       >
         {bookListItems.map(({ id, cover, title }, index) => (
           <motion.div
-            id={`book-list_cover_${id + "-" + title}`}
             key={index}
+            id={`book-list_cover_${id + "-" + title}`}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5, delay: index * 0.179 }}
             className="cursor-pointer"
           >
-            <motion.img
-              key={index}
-              src={cover}
-              alt={title}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            />
+            <Link to={title.replace(/ /g, "_")}>
+              <motion.img
+                key={index}
+                src={cover}
+                alt={title}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              />
+            </Link>
           </motion.div>
         ))}
       </motion.div>

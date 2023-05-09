@@ -18,6 +18,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
     (segment, index) => {
       const segmentPath = `/${pathSegments.slice(0, index + 1).join("/")}`;
       const label = segment.charAt(0) + segment.slice(1).replace(/-/g, " ");
+
       return { label, to: segmentPath };
     }
   );
@@ -33,12 +34,12 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
         {breadcrumbItems.map((item, index) => (
           <li
             key={index}
-            className={`flex items-center opacity-30 dark:text-neutral-300 dark:opacity-50 hover:underline hover:dark:opacity-70 ${
-              location.pathname === item.to ? "underline" : ""
+            className={`flex items-center opacity-30 dark:text-neutral-300 hover:underline hover:opacity-70 ${
+              location.pathname === item.to ? "underline opacity-50" : ""
             }`}
           >
-            <a href={item.to} className="text-sm font-medium">
-              {item.label}
+            <a href={item.to} className="text-sm font-medium italic">
+              {item.label.replace(/_/g, " ")}
             </a>
             {index !== breadcrumbItems.length - 1 && (
               <svg
