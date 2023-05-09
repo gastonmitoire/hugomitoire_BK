@@ -1,7 +1,7 @@
 import type { V2_MetaFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { Book } from ".prisma/client";
 import { db } from "~/utils/db.server";
@@ -23,22 +23,34 @@ export default function LibrosIndex() {
   const bookListItems = data.bookListItems;
 
   return (
-    <motion.div
-      className="grid grid-cols-5 gap-3"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {bookListItems.map(({ cover, title }, index) => (
-        <motion.img
-          key={index}
-          src={cover}
-          alt={title}
-          className="w-full h-full object-cover cursor-pointer"
-          whileHover={{ scale: 1.05 }} // animación al pasar el mouse sobre la imagen
-          whileTap={{ scale: 0.95 }} // animación al hacer clic sobre la imagen
-        />
-      ))}
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        className="grid grid-cols-5 gap-3"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {bookListItems.map(({ id, cover, title }, index) => (
+          <motion.div
+            id={`book-list_cover_${id + "-" + title}`}
+            key={index}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.5, delay: index * 0.179 }}
+            className="cursor-pointer"
+          >
+            <motion.img
+              key={index}
+              src={cover}
+              alt={title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            />
+          </motion.div>
+        ))}
+      </motion.div>
+    </AnimatePresence>
   );
 }

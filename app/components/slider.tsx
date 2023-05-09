@@ -75,7 +75,9 @@ export function Slider<T>({
       </div> */}
 
       <motion.button
-        initial={{ top: "initial" }}
+        initial={{ top: 30, opacity: 0 }}
+        animate={{ top: "initial", opacity: 1 }}
+        transition={{ duration: 0.5 }}
         whileHover={{ top: 30 }}
         className="absolute group grid place-items-center h-3/4 right-0 w-[8%] rounded-l-xl dark:bg-neutral-900 dark:bg-opacity-80 dark:hover:bg-opacity-100"
         onClick={handleNext}
