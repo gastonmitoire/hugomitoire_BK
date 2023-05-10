@@ -29,15 +29,15 @@ export function BookCard({
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="h-full flex justify-center pt-5 dark:bg-neutral-900 dark:bg-opacity-40">
+      <div className="h-full flex justify-center pt-5">
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -100, opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-4/5 h-4/5 grid grid-flow-col px-10 bg-white dark:bg-neutral-900 dark:bg-opacity-95 rounded-xl shadow-lg overflow-hidden"
+          className="w-[90%] md:w-4/5 h-full md:h-4/5 grid md:grid-flow-col md:px-10 bg-white dark:bg-neutral-900 dark:bg-opacity-95 rounded-xl shadow-lg"
         >
-          <div className="h-4/5 my-auto">
+          <div className="md:h-4/5 my-auto py-5 md:p-0">
             <img
               src={cover}
               alt={title}
@@ -45,12 +45,13 @@ export function BookCard({
             />
           </div>
 
-          <div className="flex flex-col gap-1 justify-center w-2/3 p-6">
-            <span className="flex items-center gap-1 font-cinzel dark:text-neutral-400">
-              <h5 className="italic uppercase">{type}</h5>|
+          <div className="flex flex-col gap-1 justify-center md:w-2/3 p-3">
+            <h2 className="text-5xl font-bold mb-2">{title}</h2>
+            <span className="flex flex-col md:flex-row md:items-center gap-1 font-cinzel dark:text-neutral-400">
+              <h5 className="italic uppercase">{type}</h5>
+              <span className="hidden md:block">|</span>
               <strong className="lowercase">{genre.name}</strong>
             </span>
-            <h2 className="text-5xl font-bold mb-2">{title}</h2>
             <p className="font-bellefair text-2xl p-3 text-gray-700 dark:text-neutral-200">
               {description}
             </p>
