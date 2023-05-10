@@ -52,7 +52,7 @@ export default function Index() {
   }
 
   return (
-    <div className="grid place-items-center h-[90vh]">
+    <div className="h-screen md:h-[90vh]">
       <Slider
         items={books}
         onChange={handleChange}
