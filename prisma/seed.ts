@@ -48,6 +48,54 @@ async function seed() {
                 title: `Capitulo ${Math.floor(Math.random() * 100)}`,
                 order: 3,
               },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 4,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 5,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 6,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 7,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 8,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 9,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 10,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 11,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 12,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 13,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 14,
+              },
+              {
+                title: `Capitulo ${Math.floor(Math.random() * 100)}`,
+                order: 15,
+              },
             ],
           },
           comments: {
