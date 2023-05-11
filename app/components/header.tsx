@@ -7,7 +7,7 @@ export function Header() {
     <header className="container mx-auto flex items-center justify-between w-full h-[10vh] px-3 md:p-0 bg-white dark:bg-neutral-900">
       <div className="flex-1">
         <Drawer buttonClassName="lg:hidden">
-          <Navigation className="hidden lg:block" isvertical />
+          <Navigation isvertical />
         </Drawer>
         <Navigation className="hidden lg:block" />
       </div>

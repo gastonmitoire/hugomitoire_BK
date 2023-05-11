@@ -5,7 +5,7 @@ type NavigationProps = {
 
 export function Navigation({ isvertical = false, className }: NavigationProps) {
   const classes = isvertical
-    ? "flex flex-col items-center justify-center space-y-4"
+    ? "flex flex-col space-y-6"
     : "flex items-center space-x-4";
 
   return (
