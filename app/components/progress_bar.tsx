@@ -36,7 +36,7 @@ export function ProgressBar({ timeout, reset }: ProgressBarProps) {
         height: "3px",
         position: "absolute",
         transition: "all 0.1s linear",
-        zIndex: 1000,
+        zIndex: 30,
       }}
     ></div>
   );

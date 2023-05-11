@@ -9,6 +9,7 @@ import {
   Outlet,
   ScrollRestoration,
   useRouteError,
+  LiveReload,
 } from "@remix-run/react";
 import { useLocation } from "@remix-run/react";
 import stylesheet from "./tailwind.css";
@@ -39,6 +40,8 @@ export default function App() {
     <Document>
       <Header />
       <Outlet />
+
+      <LiveReload />
       <ScrollRestoration />
     </Document>
   );

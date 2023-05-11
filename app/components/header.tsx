@@ -1,10 +1,15 @@
 import { Navigation } from "./navigation";
 
+import { Drawer } from "./drawer";
+
 export function Header() {
   return (
-    <header className="container mx-auto flex items-center justify-between w-full h-[10vh] bg-white dark:bg-neutral-900">
+    <header className="container mx-auto flex items-center justify-between w-full h-[10vh] px-3 md:p-0 bg-white dark:bg-neutral-900">
       <div className="flex-1">
-        <Navigation />
+        <Drawer buttonClassName="lg:hidden">
+          <Navigation className="hidden lg:block" isvertical />
+        </Drawer>
+        <Navigation className="hidden lg:block" />
       </div>
       <div className="flex-0 flex items-center">
         <a
@@ -14,7 +19,7 @@ export function Header() {
           Hugo Mitoire
         </a>
       </div>
-      <div className="flex-1"></div>
+      <div className="md:flex-1"></div>
     </header>
   );
 }
