@@ -86,7 +86,7 @@ export function Slider<T>({
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-10 h-10 hidden md:block pointer-events-none -rotate-90 transition-transform ease-in duration-300 dark:stroke-neutral-700 group-hover:rotate-0 group-hover:dark:stroke-neutral-300"
+          className="w-10 h-10 hidden md:block pointer-events-none rotate-90 transition-transform ease-in duration-300 dark:stroke-neutral-700 group-hover:rotate-0 group-hover:dark:stroke-neutral-300"
         >
           <path
             strokeLinecap="round"
