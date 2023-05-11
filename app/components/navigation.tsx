@@ -15,16 +15,16 @@ export function Navigation({ isvertical = false, className }: NavigationProps) {
           <a href="/">Inicio</a>
         </li>
         <li className="transition-all hover:dark:text-neutral-100">
-          <a href="/libros">Bio</a>
+          <a href="/bio">Bio</a>
         </li>
         <li className="transition-all hover:dark:text-neutral-100">
           <a href="/libros">Libros</a>
         </li>
         <li className="transition-all hover:dark:text-neutral-100">
-          <a href="/libros">Media</a>
+          <a href="/media">Media</a>
         </li>
         <li className="transition-all hover:dark:text-neutral-100">
-          <a href="/libros">Contacto</a>
+          <a href="/contacto">Contacto</a>
         </li>
       </ul>
     </nav>
