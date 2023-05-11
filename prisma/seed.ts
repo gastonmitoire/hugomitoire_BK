@@ -1,39 +1,28 @@
 import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
+import { fakeBooksData } from "./fakers/fakeBooks";
+import { fakeCommentsData } from "./fakers/fakeComments";
+import { fakeUsers } from "./fakers/fakeUsers";
+
 async function seed() {
-  const kody = await db.user.create({
-    data: {
-      username: "kody",
-      // this is a hashed version of "twixrox"
-      passwordHash:
-        "$2b$10$K7L1OJ45/4Y2nIvhRVpCe.FSmhDdWoXehVzJptJ/op0lSsvqNu/1u",
-      email: "kody@kody.com",
-      profile: {
-        create: {
-          displayName: "Kody Smith",
-          bio: "Hi, I'm Kody!",
-          image: "https://example.com/avatar.jpg",
-          firstName: "Kody",
-          lastName: "Smith",
-          dateOfBirth: new Date("1995-05-07T00:00:00.000Z"),
-        },
-      },
-    },
-  });
+  const [kody, maco, edicionesDeLaPaz] = await Promise.all(fakeUsers);
+
+  const chapterImages = [
+    "http://2.bp.blogspot.com/-HjQOozN-l38/Tan37BbyupI/AAAAAAAAA-A/QO2DRZOB3Lc/s1600/poseida.jpg",
+    "https://4.bp.blogspot.com/-HZcfKBH2oX8/TaoW_Z7o4zI/AAAAAAAABAs/XCo1Oi2dsKw/s1600/C3+llegan+las+criaturas.jpg",
+    "http://1.bp.blogspot.com/-m2a2PM-CxF0/Tan2cb0sGGI/AAAAAAAAA9w/8epTxhzV2Zo/s1600/Luz+mala+ok.jpg",
+    "http://3.bp.blogspot.com/-j-3shWubiz0/Tan4Fy8C1NI/AAAAAAAAA-I/AhDMLFqFHhA/s1600/tapa+3.jpg",
+    "http://2.bp.blogspot.com/-pEVtoCJTctU/Tan4P1JloHI/AAAAAAAAA-g/W5YXCvZs3KU/s1600/extra%25C3%25B1o+en+la+ventana.jpg",
+    "http://4.bp.blogspot.com/-opHZCbpNgt4/Tan4OUUXesI/AAAAAAAAA-c/Os5vYD70_bM/s1600/el+hombre+del+capote+negro.jpg",
+  ];
+
   await Promise.all(
-    getBooks().map((book) => {
+    fakeBooksData().map((book) => {
       const dataBook = { ...book };
       return db.book.create({
         data: {
           ...dataBook,
-          genre: {
-            create: {
-              name: "Fantasia y ciencia ficcion",
-              nameSlug: "fantasia-y-ciencia-ficcion" + Math.random(),
-              ageRange: "+12",
-            },
-          },
           chapters: {
             create: [
               {
@@ -47,6 +36,16 @@ async function seed() {
               {
                 title: `Capitulo ${Math.floor(Math.random() * 100)}`,
                 order: 3,
+                text: {
+                  create: {
+                    content:
+                      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                    image:
+                      chapterImages[
+                        Math.floor(Math.random() * chapterImages.length)
+                      ],
+                  },
+                },
               },
               {
                 title: `Capitulo ${Math.floor(Math.random() * 100)}`,
@@ -99,7 +98,7 @@ async function seed() {
             ],
           },
           comments: {
-            create: getComments().map((comment) => ({
+            create: fakeCommentsData().map((comment) => ({
               authorId: kody.id,
               ...comment,
             })),
@@ -111,46 +110,3 @@ async function seed() {
 }
 
 seed();
-
-const getBooks = () => [
-  {
-    title: "Criaturas Celestes",
-    description: `Seres extra galácticos aterrizan en una chacra y entablan amistad con una familia de campesinos. Sobrevienen increíbles situaciones.`,
-    type: "novela",
-    publicationDate: new Date("1996-01-01"),
-    cover:
-      "http://hugomitoire.com/mediafiles/portada_libros/image857_4UoPay5.png",
-    secondaryImage:
-      "http://4.bp.blogspot.com/-HZcfKBH2oX8/TaoW_Z7o4zI/AAAAAAAABAs/XCo1Oi2dsKw/s1600/C3+llegan+las+criaturas.jpg",
-  },
-  {
-    title: "Cuentos de terror para Franco VIII",
-    description: "Cuentos de terror, misterio y situaciones paranormales.",
-    type: "cuento",
-    publicationDate: new Date("1996-01-01"),
-    cover: "http://hugomitoire.com/mediafiles/portada_libros/image1081.png",
-    secondaryImage:
-      "https://4.bp.blogspot.com/-GXrsM6D4Euc/Wl9GbwwRz4I/AAAAAAAABqE/XKEUVIplLnUsiDVqH2y5Mx04qtdGhqjpQCLcBGAs/s1600/El%2Bgallo.jpg",
-  },
-  {
-    title: "La Chancha con ruleros",
-    description: `Este libro-album pertenece a la Colección CURIOSA VIDA ANIMAL. Relata la afligida existencia de una chancha que quería tener el pelo enrulado.`,
-    type: "cuento",
-    publicationDate: new Date("1996-01-01"),
-    cover: "http://hugomitoire.com/mediafiles/portada_libros/image927.png",
-    secondaryImage:
-      "https://4.bp.blogspot.com/-S66uYEW2LjU/Wk1--I66qZI/AAAAAAAABkk/XgXis8zWNPcJF0KUUuU7dCmmQWuoozJewCPcBGAYYCw/s1600/chancha%2Bpag%2B012%2By%2B13.jpg",
-  },
-];
-
-const getComments = () => [
-  {
-    text: "This is a comment",
-  },
-  {
-    text: "This is another comment",
-  },
-  {
-    text: "This is a third comment",
-  },
-];
