@@ -25,7 +25,7 @@ export default function LibrosIndexRoute() {
   return (
     <AnimatePresence>
       <motion.div
-        className="container mx-auto grid grid-cols-5 gap-3"
+        className="container mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 px-1 md:px-0"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
