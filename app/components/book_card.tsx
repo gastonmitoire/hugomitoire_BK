@@ -54,8 +54,14 @@ export function BookCard({
           <p className="font-bellefair text-2xl p-3 text-gray-700 dark:text-neutral-200">
             {description}
           </p>
-          <Button color="primary" size="large" className="self-end">
-            <Link to={"libros/" + title.replace(/ /g, "_")}>Ver Libro</Link>
+          <Button
+            isLink
+            to={"libros/" + title.replace(/ /g, "_")}
+            color="primary"
+            size="large"
+            className="self-end"
+          >
+            Ver Libro
           </Button>
         </div>
       </motion.div>

@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes, ReactNode } from "react";
+import { Link } from "@remix-run/react";
 import { motion } from "framer-motion";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,6 +9,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: "left" | "right";
   className?: string;
   disableAnimation?: boolean;
+  isLink?: boolean;
+  to?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -18,6 +21,8 @@ export const Button: React.FC<ButtonProps> = ({
   iconPosition = "left",
   className,
   disableAnimation = false,
+  isLink = false,
+  to,
 }) => {
   const buttonSizeClasses = {
     small: "px-2 py-1 text-xs rounded-sm",
@@ -48,17 +53,32 @@ export const Button: React.FC<ButtonProps> = ({
     whileHover: { scale: 1.05 },
   };
 
-  return (
+  return isLink ? (
+    <Link to={to!} className={`${className}`}>
+      <motion.button
+        {...(disableAnimation ? {} : animation)}
+        className={`flex items-center justify-center gap-2 ${buttonSizeClasses[size]} ${buttonColorClasses[color]}`}
+      >
+        {icon && iconPosition === "left" && (
+          <span className={iconClasses.left}>{icon}</span>
+        )}
+        {children}
+        {icon && iconPosition === "right" && (
+          <span className={iconClasses.right}>{icon}</span>
+        )}
+      </motion.button>
+    </Link>
+  ) : (
     <motion.button
       {...(disableAnimation ? {} : animation)}
-      className={`uppercase inline-flex items-center justify-center font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md ${buttonSizeClasses[size]} ${buttonColorClasses[color]} ${className}`}
+      className={`flex items-center justify-center gap-2 ${buttonSizeClasses[size]} ${buttonColorClasses[color]} ${className}`}
     >
       {icon && iconPosition === "left" && (
-        <span className={`${iconClasses[iconPosition]}`}>{icon}</span>
+        <span className={iconClasses.left}>{icon}</span>
       )}
       {children}
       {icon && iconPosition === "right" && (
-        <span className={`${iconClasses[iconPosition]}`}>{icon}</span>
+        <span className={iconClasses.right}>{icon}</span>
       )}
     </motion.button>
   );
