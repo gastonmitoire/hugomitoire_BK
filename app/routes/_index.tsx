@@ -12,6 +12,7 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
+  console.log("request", request);
   const books = await db.book.findMany({
     include: {
       chapters: true,

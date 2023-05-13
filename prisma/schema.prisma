@@ -25,7 +25,7 @@ model User {
   notifications    Notifications[]
   fanarts          Fanart[]
   username         String          @unique
-  email            String          @unique
+  email            String?         @unique
   passwordHash     String
   role             String          @default("USER")
 }
