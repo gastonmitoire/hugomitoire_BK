@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for hugomitoire on 2023-05-09T01:50:59-03:00
+# fly.toml app configuration file generated for hugomitoire on 2023-05-13T10:47:57-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,10 +7,16 @@ app = "hugomitoire"
 primary_region = "scl"
 
 [env]
+  DATABASE_URL = "file:/data/sqlite.db"
   PORT = "8080"
+
+[[mounts]]
+  source = "data"
+  destination = "/data"
 
 [http_service]
   internal_port = 8080
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
+  min_machines_running = 0
