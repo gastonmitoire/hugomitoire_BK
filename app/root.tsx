@@ -40,8 +40,8 @@ export default function App() {
     <Document>
       <Header />
       <Outlet />
-      <ScrollRestoration />
       <LiveReload />
+      <ScrollRestoration />
     </Document>
   );
 }
