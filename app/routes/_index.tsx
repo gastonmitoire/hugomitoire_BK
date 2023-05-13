@@ -53,12 +53,16 @@ export default function Index() {
 
   return (
     <div className="h-screen md:h-[90vh]">
-      <Slider
-        items={books}
-        onChange={handleChange}
-        renderItem={renderCard}
-        autoPlay
-      />
+      {books ? (
+        <Slider
+          items={books}
+          onChange={handleChange}
+          renderItem={renderCard}
+          autoPlay
+        />
+      ) : (
+        "No books found"
+      )}
     </div>
   );
 }
