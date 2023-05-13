@@ -74,7 +74,7 @@ export default function ContactoIndexRoute() {
     <div className="grid place-items-center h-[90vh]">
       <Form
         method="post"
-        className="grid grid-cols-5 pt-16 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-950"
+        className="grid grid-cols-1 md:grid-cols-5 pt-16 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-950"
       >
         <div className="col-span-2 flex flex-col gap-3 pb-20 px-10">
           <h3 className="text-3xl">Contacto</h3>
@@ -175,7 +175,7 @@ export default function ContactoIndexRoute() {
             </p>
             <textarea
               name="message"
-              className="h-full bg-transparent resize-none"
+              className="h-full min-h-[75px] bg-transparent resize-none"
               placeholder="Escribe un mensaje"
             />
             {actionData?.fieldErrors?.message ? (
