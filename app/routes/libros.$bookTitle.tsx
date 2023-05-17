@@ -69,7 +69,7 @@ export default function LibroRoute() {
   return (
     <div className="h-full">
       <div
-        className="w-full h-4/5"
+        className="w-full h-4/5 mb-16"
         style={{
           background: `url(${book.secondaryImage})`,
           backgroundSize: "cover",
@@ -83,16 +83,16 @@ export default function LibroRoute() {
           animate="show"
           className="w-full h-full"
           style={{
-            background: `linear-gradient(3deg, rgba(0, 0, 0, 1) 5rem, rgba(0,0,0, 0.7), rgba(0,0,0, 0.3), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0))`,
+            background: `linear-gradient(3deg, rgba(10, 10, 10, 1) 5rem, rgba(10,10,10, 0.7), rgba(10,10,10, 0.3), rgba(10, 10, 10, 0.2), rgba(10, 10, 10, 0))`,
           }}
         >
           <div className="container flex flex-col items-start justify-end w-full h-full space-y-4">
             <motion.div variants={item}>
-              <h1 className="text-5xl font-bold text-center">{book.title}</h1>
+              <h1 className="text-5xl font-bold">{book.title}</h1>
             </motion.div>
             <motion.div
               variants={item}
-              className="flex items-center gap-5 font-body text-sm text-center text-neutral-400 uppercase tracking-wide"
+              className="flex items-start lg:items-center gap-5 font-body text-sm text-neutral-400 uppercase tracking-wide"
             >
               <p>{book.type}</p>
               <p>{book.genre.name}</p>
@@ -102,9 +102,13 @@ export default function LibroRoute() {
         </motion.div>
       </div>
 
-      <div className="dark:bg-black h-full">
-        <nav className="font-cinzel font-semibold">
-          <ul className="flex items-center justify-center gap-5 py-10">
+      <div className="relative">
+        <nav
+          aria-label="Sub navigation"
+          role="navigation"
+          className="sticky top-0 left-0 uppercase bg-neutral-950 h-full hidden lg:block"
+        >
+          <ul className="flex items-center justify-center gap-5 py-5 z-10">
             <li
               className="cursor-pointer"
               onClick={() => goToSection("detail-section")}
@@ -126,16 +130,23 @@ export default function LibroRoute() {
           </ul>
         </nav>
 
-        <section id="detail-section" className="dark:bg-neutral-950">
-          <div className="container mx-auto flex">
-            <div className="flex-1 py-8">
+        <motion.section
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          id="detail-section"
+          className="w-full h-full scroll-m-16"
+        >
+          <div className="flex flex-col lg:flex-row h-full container py-8">
+            <div className="lg:flex-1 p-8 bg-neutral-900">
               <img src={book.cover} alt="" className="mx-auto w-64" />
             </div>
-            <div className="p-8" style={{ flex: "2 1 0%" }}>
+            <div className="p-8 bg-neutral-900" style={{ flex: "2 1 0%" }}>
               <h1 className="text-4xl font-bold pb-5">Sinopsis</h1>
               <p className="text-xl font-bellefair">{book.description}</p>
             </div>
-            <div className="flex flex-col gap-5 p-8">
+            <div className="lg:flex-1 flex flex-col gap-5 p-8 bg-neutral-950">
               <span>
                 <h3 className="text-2xl font-bold">Fecha de publicación</h3>
                 <p className="text-neutral-400">{book.publicationDate}</p>
@@ -150,7 +161,27 @@ export default function LibroRoute() {
               </span>
             </div>
           </div>
-        </section>
+        </motion.section>
+
+        <motion.section id="chapters-section" className="scroll-m-16">
+          <header className="flex items-center py-8 text-neutral-900 bg-white">
+            <div className="container mx-auto">
+              <h1 className="text-4xl font-bold">Capítulos</h1>
+            </div>
+          </header>
+          <motion.div className="py-8">
+            <ChapterList chapters={chapters} />
+          </motion.div>
+        </motion.section>
+
+        <motion.section id="gallery-section" className="scroll-m-16">
+          <header className="flex items-center py-8 text-neutral-900 bg-white">
+            <div className="container mx-auto">
+              <h1 className="text-4xl font-bold">Galería</h1>
+            </div>
+          </header>
+          <motion.div className="py-8"></motion.div>
+        </motion.section>
       </div>
     </div>
   );

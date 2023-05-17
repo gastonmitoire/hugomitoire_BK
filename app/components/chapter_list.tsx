@@ -27,31 +27,45 @@ const container = {
 };
 
 const item = {
-  hidden: { opacity: 0, x: -100 },
-  show: { opacity: 1, x: 0 },
+  hidden: { opacity: 0, y: -50 },
+  show: { opacity: 1, y: 0 },
 };
 
 export function ChapterList({ chapters }: ChapterListProps) {
+  const columnCount = 7;
+
+  const columnGroups: Chapter[][] = Array.from(
+    { length: Math.ceil(chapters.length / columnCount) },
+    (_, index) => chapters.slice(index * columnCount, (index + 1) * columnCount)
+  );
+
   return (
-    <motion.ul
-      variants={container}
-      initial="hidden"
-      animate="show"
-      className="flex flex-col gap-2"
-    >
-      {chapters.map((chapter) => (
-        <motion.li
-          variants={item}
-          key={chapter.id}
-          className="flex flex-col gap-2"
+    <motion.ul className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-2 w-full">
+      {columnGroups.map((column, groupIndex) => (
+        <motion.div
+          key={groupIndex}
+          className="flex flex-col gap-2 w-full py-1"
+          initial="hidden"
+          animate="show"
+          variants={container}
         >
-          <Link
-            to={`/libros/${chapter.title.replace(/ /g, "_")}/${chapter.order}`}
-            className="text-xl font-semibold"
-          >
-            {chapter.title}
-          </Link>
-        </motion.li>
+          {column.map((chapter, columnIndex) => (
+            <motion.span
+              key={chapter.id}
+              className="p-0.5 rounded-sm border border-transparent hover:border-primary hover:transition-colors duration-300"
+              variants={item}
+            >
+              <Link
+                to={`/libros/${chapter.title.replace(/ /g, "_")}/${
+                  chapter.order
+                }`}
+                className="block p-5 bg-neutral-900 bg-opacity-30 "
+              >
+                {groupIndex * columnCount + columnIndex + 1} - {chapter.title}
+              </Link>
+            </motion.span>
+          ))}
+        </motion.div>
       ))}
     </motion.ul>
   );

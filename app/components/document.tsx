@@ -31,7 +31,7 @@ export function Document({
         {title ? <title>{title}</title> : null}
         <Links />
       </head>
-      <body className="dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-900">
+      <body className="text-neutral-200 bg-neutral-950">
         {children}
         <Scripts />
         <LiveReload />
