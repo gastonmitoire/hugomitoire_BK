@@ -59,6 +59,13 @@ const item = {
 export default function LibroRoute() {
   const { book, chapters } = useLoaderData();
 
+  const goToSection = (section: string) => {
+    const sectionElement = document.getElementById(section);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="h-full">
       <div
@@ -85,30 +92,65 @@ export default function LibroRoute() {
             </motion.div>
             <motion.div
               variants={item}
-              className="flex items-center gap-7 font-body text-sm text-center text-neutral-400 uppercase tracking-wide"
+              className="flex items-center gap-5 font-body text-sm text-center text-neutral-400 uppercase tracking-wide"
             >
-              <h3>{book.type}</h3>
-              <h3>{book.genre.name}</h3>
-              <h3>{book.genre.ageRange}</h3>
+              <p>{book.type}</p>
+              <p>{book.genre.name}</p>
+              <p>{book.genre.ageRange}</p>
             </motion.div>
           </div>
         </motion.div>
       </div>
 
       <div className="dark:bg-black h-full">
-        <nav>
-          <ul className="flex items-center justify-center gap-5 pt-10">
-            <li>
-              <Link to={`/libros/${book.title}/detalles`}>Detalles</Link>
+        <nav className="font-cinzel font-semibold">
+          <ul className="flex items-center justify-center gap-5 py-10">
+            <li
+              className="cursor-pointer"
+              onClick={() => goToSection("detail-section")}
+            >
+              Detalles
             </li>
-            <li>
-              <Link to={`/libros/${book.title}/capitulos`}>Capítulos</Link>
+            <li
+              className="cursor-pointer"
+              onClick={() => goToSection("chapters-section")}
+            >
+              Capítulos
             </li>
-            <li>
-              <Link to={`/libros/${book.title}/galeria`}>Galería</Link>
+            <li
+              className="cursor-pointer"
+              onClick={() => goToSection("gallery-section")}
+            >
+              Galería
             </li>
           </ul>
         </nav>
+
+        <section id="detail-section" className="dark:bg-neutral-950">
+          <div className="container mx-auto flex">
+            <div className="flex-1 py-8">
+              <img src={book.cover} alt="" className="mx-auto w-64" />
+            </div>
+            <div className="p-8" style={{ flex: "2 1 0%" }}>
+              <h1 className="text-4xl font-bold pb-5">Sinopsis</h1>
+              <p className="text-xl font-bellefair">{book.description}</p>
+            </div>
+            <div className="flex flex-col gap-5 p-8">
+              <span>
+                <h3 className="text-2xl font-bold">Fecha de publicación</h3>
+                <p className="text-neutral-400">{book.publicationDate}</p>
+              </span>
+              <span>
+                <h3 className="text-2xl font-bold">Ilustrador</h3>
+                <p className="text-neutral-400">Maco Pacheco</p>
+              </span>
+              <span>
+                <h3 className="text-2xl font-bold">Editorial</h3>
+                <p className="text-neutral-400">Ediciones de La Paz</p>
+              </span>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
