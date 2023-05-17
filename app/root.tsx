@@ -3,16 +3,23 @@ import type {
   V2_MetaFunction,
   LoaderArgs,
 } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData, useLocation } from "react-router";
 import {
   isRouteErrorResponse,
   Link,
   Outlet,
   ScrollRestoration,
   useRouteError,
+  LiveReload,
 } from "@remix-run/react";
+import type { PropsWithChildren } from "react";
+import { User } from ".prisma/client";
 import stylesheet from "./tailwind.css";
 import globalStylesheet from "~/styles/global.css";
 
+import { getUser } from "./utils/session.server";
+import { Breadcrumbs } from "~/components/breadcrumbs";
 import { Document } from "~/components/document";
 import { Header } from "~/components/header";
 
@@ -31,11 +38,34 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
+export const loader = async ({ request }: LoaderArgs) => {
+  const user = await getUser(request);
+
+  console.log("user", user);
+  return json({ user });
+};
+
+type AppProps = PropsWithChildren<{
+  user: {
+    id: string;
+    username: string;
+    email?: string;
+    profile?: {
+      id: string;
+      image?: string;
+      displayName?: string;
+    };
+  };
+}>;
+
 export default function App() {
+  const { user } = useLoaderData() as AppProps;
+
   return (
     <Document>
-      <Header />
+      <Header user={user} />
       <Outlet />
+      <LiveReload />
       <ScrollRestoration />
     </Document>
   );

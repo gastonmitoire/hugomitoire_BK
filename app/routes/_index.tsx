@@ -12,7 +12,8 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
-  const bookListItems = await db.book.findMany({
+  console.log("request", request);
+  const books = await db.book.findMany({
     include: {
       chapters: true,
       genre: true,
@@ -20,12 +21,11 @@ export const loader = async ({ request }: LoaderArgs) => {
     },
   });
 
-  return json({ bookListItems });
+  return json({ books });
 };
 
 export default function Index() {
-  const data = useLoaderData<typeof loader>();
-  const books = data.bookListItems;
+  const { books } = useLoaderData<typeof loader>();
 
   function handleChange(index: number) {
     console.log("Current index:", index);
@@ -52,13 +52,17 @@ export default function Index() {
   }
 
   return (
-    <div className="grid place-items-center h-screen">
-      <Slider
-        items={books}
-        onChange={handleChange}
-        renderItem={renderCard}
-        autoPlay
-      />
+    <div className="h-screen md:h-[90vh]">
+      {books.length > 0 ? (
+        <Slider
+          items={books}
+          onChange={handleChange}
+          renderItem={renderCard}
+          autoPlay
+        />
+      ) : (
+        "No books found"
+      )}
     </div>
   );
 }

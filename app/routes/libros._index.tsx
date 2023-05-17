@@ -18,36 +18,38 @@ export const loader = async ({ request }: LoaderArgs) => {
   return json({ bookListItems });
 };
 
-export default function LibrosIndex() {
+export default function LibrosIndexRoute() {
   const data = useLoaderData<typeof loader>();
   const bookListItems = data.bookListItems;
 
   return (
     <AnimatePresence>
       <motion.div
-        className="grid grid-cols-5 gap-3"
+        className="container mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 px-1 md:px-0"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         {bookListItems.map(({ id, cover, title }, index) => (
           <motion.div
-            id={`book-list_cover_${id + "-" + title}`}
             key={index}
+            id={`book-list_cover_${id + "-" + title}`}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5, delay: index * 0.179 }}
             className="cursor-pointer"
           >
-            <motion.img
-              key={index}
-              src={cover}
-              alt={title}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            />
+            <Link to={title.replace(/ /g, "_")}>
+              <motion.img
+                key={index}
+                src={cover}
+                alt={title}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              />
+            </Link>
           </motion.div>
         ))}
       </motion.div>
