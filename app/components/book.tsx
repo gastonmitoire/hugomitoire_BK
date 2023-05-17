@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 interface BookProps {
@@ -12,14 +12,22 @@ interface BookProps {
 }
 
 export function Book({ title, description, type, genre, cover }: BookProps) {
+  const [showDetails, setShowDetails] = useState(true);
+
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
   return (
-    <div className="flex h-full rounded-xl dark:bg-neutral-900 dark:bg-opacity-70">
+    <div className="flex flex-col md:flex-row h-full rounded-l-xl dark:bg-neutral-900 dark:bg-opacity-70">
       <motion.div
+        className={`${
+          showDetails ? "md:w-full" : "hidden"
+        } flex flex-col gap-y-3 py-3 pl-3 h-full`}
         initial={{ opacity: 0, x: 10 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 10 }}
         transition={{ duration: 0.9 }}
-        className="flex flex-col gap-y-3 py-3 pl-3 h-full"
       >
         <p className="text-xl font-bold text-white text-right font-bellefair py-1 px-3 rounded-l-xl dark:text-neutral-800 dark:bg-neutral-200 dark:bg-opacity-90">
           {description}
@@ -53,7 +61,9 @@ export function Book({ title, description, type, genre, cover }: BookProps) {
         transition={{ duration: 0.5 }}
         src={cover}
         alt=""
-        className="h-full mx-auto object-contain shadow-md shadow-neutral-950"
+        className={`${
+          showDetails ? "md:full hidden lg:block" : "w-full"
+        } h-full mx-auto object-contain`}
       />
     </div>
   );

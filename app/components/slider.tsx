@@ -95,23 +95,6 @@ export function Slider<T>({
           />
         </motion.svg>
       </motion.button>
-
-      {/* <div className="absolute bottom-40  flex">
-        {items.map((_, index) => (
-          <div
-            key={index}
-            className={`w-3 h-3 rounded-full mx-1 cursor-pointer ${
-              index === currentIndex
-                ? "bg-neutral-900 dark:bg-neutral-300"
-                : "bg-neutral-300 dark:bg-neutral-700"
-            }`}
-            onClick={() => {
-              setCurrentIndex(index);
-              onChange(index);
-            }}
-          />
-        ))}
-      </div> */}
     </div>
   );
 }

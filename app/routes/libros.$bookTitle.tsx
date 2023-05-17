@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import type { ActionArgs, LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import {
@@ -13,14 +14,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Chapter } from "@prisma/client";
 import { db } from "~/utils/db.server";
 
-import { Tabs } from "~/components/tabs";
-import { Book } from "~/components/book";
+import { ChapterList } from "~/components/chapter_list";
 
 export const loader = async ({ params }: LoaderArgs) => {
   const formatedTitle = params.bookTitle?.replace(/_/g, " ");
   const book = await db.book.findUnique({
     where: { title: formatedTitle },
-    include: { genre: true, chapters: true, comments: true },
+    include: {
+      genre: true,
+      comments: true,
+    },
   });
 
   if (!book) {
@@ -30,74 +33,82 @@ export const loader = async ({ params }: LoaderArgs) => {
     );
   }
 
-  return json({ book });
+  const chapters = await db.chapter.findMany({
+    where: { bookId: book.id },
+    orderBy: { order: "asc" },
+  });
+
+  return json({ book, chapters });
+};
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, x: -100 },
+  show: { opacity: 1, x: 0 },
 };
 
 export default function LibroRoute() {
-  const { book } = useLoaderData();
-
-  console.log("book", book);
+  const { book, chapters } = useLoaderData();
 
   return (
-    <div
-      className="h-[90vh] w-full bg-cover bg-center"
-      style={{
-        backgroundImage: `url(${book.secondaryImage})`,
-        backgroundAttachment: "fixed",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="h-full bg-neutral-500 bg-opacity-75">
-        <div className="container mx-auto grid grid-cols-3 grid-rows-3 h-full w-full p-3">
-          <div className="col-span-2 row-span-3">
-            <Book {...book} />
+    <div className="h-full">
+      <div
+        className="w-full h-4/5"
+        style={{
+          background: `url(${book.secondaryImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="w-full h-full"
+          style={{
+            background: `linear-gradient(3deg, rgba(0, 0, 0, 1) 5rem, rgba(0,0,0, 0.7), rgba(0,0,0, 0.3), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0))`,
+          }}
+        >
+          <div className="container flex flex-col items-start justify-end w-full h-full space-y-4">
+            <motion.div variants={item}>
+              <h1 className="text-5xl font-bold text-center">{book.title}</h1>
+            </motion.div>
+            <motion.div
+              variants={item}
+              className="flex items-center gap-7 font-body text-sm text-center text-neutral-400 uppercase tracking-wide"
+            >
+              <h3>{book.type}</h3>
+              <h3>{book.genre.name}</h3>
+              <h3>{book.genre.ageRange}</h3>
+            </motion.div>
           </div>
-          <div className="row-span-3">
-            <div className="flex flex-col gap-3 md:gap-0 h-full md:overflow-y-auto">
-              <motion.h3
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5 }}
-                className="text-xl text-center font-light font-cinzel lowercase py-3 dark:bg-neutral-900 dark:bg-opacity-50"
-              >
-                Indice
-              </motion.h3>
-              <AnimatePresence>
-                <motion.ul className="flex-1 flex flex-col gap-1 min-h-min">
-                  {book.chapters.map(({ id, title, order }: Chapter) => (
-                    <motion.li
-                      initial={{ opacity: 0, x: -100 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -100 }}
-                      transition={{ duration: 0.7, delay: order * 0.1 }}
-                      key={id}
-                      className="py-3 px-3 cursor-pointer dark:bg-neutral-900 dark:bg-opacity-80 hover:dark:bg-opacity-95"
-                    >
-                      <Link
-                        to={`/libros/${book.title.replace(/ /g, "_")}/${id}`}
-                        className="font-cinzel text-lg dark:text-neutral-300"
-                      >
-                        {order} | {title}
-                      </Link>
-                    </motion.li>
-                  ))}
-                </motion.ul>
-              </AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{
-                  duration: 0.5,
-                }}
-                className="py-1.5 px-3 text-center dark:text-neutral-300 cursor-pointer dark:bg-neutral-900 dark:bg-opacity-50"
-              >
-                .
-              </motion.div>
-            </div>
-          </div>
-        </div>
+        </motion.div>
+      </div>
+
+      <div className="dark:bg-black h-full">
+        <nav>
+          <ul className="flex items-center justify-center gap-5 pt-10">
+            <li>
+              <Link to={`/libros/${book.title}/detalles`}>Detalles</Link>
+            </li>
+            <li>
+              <Link to={`/libros/${book.title}/capitulos`}>Capítulos</Link>
+            </li>
+            <li>
+              <Link to={`/libros/${book.title}/galeria`}>Galería</Link>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
