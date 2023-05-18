@@ -1,15 +1,20 @@
 type NavigationProps = {
   isvertical?: boolean;
   className?: string;
+  link?: boolean;
 };
 
-export function Navigation({ isvertical = false, className }: NavigationProps) {
+export function Navigation({
+  isvertical = false,
+  className,
+  link = false,
+}: NavigationProps) {
   const classes = isvertical
     ? "flex flex-col space-y-6"
     : "flex items-center space-x-4";
 
   return (
-    <ul className={`lowercase dark:text-neutral-400 ${classes} ${className}`}>
+    <ul className={`lowercase text-neutral-400 ${classes} ${className}`}>
       <li className="transition-all hover:dark:text-neutral-100">
         <a href="/">Inicio</a>
       </li>
