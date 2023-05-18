@@ -61,7 +61,7 @@ export default function App() {
   return (
     <Document>
       <TopBar user={user} />
-      <main>
+      <main className="min-h-screen">
         <Outlet />
       </main>
       <Footer />

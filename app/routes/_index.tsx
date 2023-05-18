@@ -55,6 +55,7 @@ export default function Index() {
             onChange={handleChange}
             renderItem={renderHero}
             autoPlay
+            hideProgressBar
           />
         ) : (
           "No books found"
