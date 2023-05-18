@@ -53,7 +53,7 @@ export function ChapterList({ chapters }: ChapterListProps) {
           {column.map((chapter, columnIndex) => (
             <AnimatePresence>
               <motion.span
-                key={chapter.id}
+                key={columnIndex}
                 className="p-0.5 rounded-sm border border-transparent hover:border-primary hover:transition-colors duration-300"
                 transition={{ delay: columnIndex * 0.1 }}
                 whileInView={{ opacity: 1, y: 0 }}

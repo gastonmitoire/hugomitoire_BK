@@ -4,6 +4,7 @@ import {
   LiveReload,
   Meta,
   Outlet,
+  ScrollRestoration,
   Scripts,
   useRouteError,
 } from "@remix-run/react";
@@ -33,8 +34,9 @@ export function Document({
       </head>
       <body className="text-neutral-200 bg-neutral-950">
         {children}
-        <Scripts />
         <LiveReload />
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );

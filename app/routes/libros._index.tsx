@@ -1,6 +1,6 @@
 import type { V2_MetaFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Book } from ".prisma/client";

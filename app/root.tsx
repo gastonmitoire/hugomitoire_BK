@@ -4,23 +4,20 @@ import type {
   LoaderArgs,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData, useLocation } from "react-router";
+import { useLoaderData } from "react-router";
 import {
   isRouteErrorResponse,
   Link,
   Outlet,
-  ScrollRestoration,
   useRouteError,
-  LiveReload,
 } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
-import { User } from ".prisma/client";
 import stylesheet from "./tailwind.css";
 import globalStylesheet from "~/styles/global.css";
 
 import { getUser } from "./utils/session.server";
-import { Breadcrumbs } from "~/components/breadcrumbs";
 import { Document } from "~/components/document";
+import { Footer } from "./components/footer";
 import { TopBar } from "~/components/topbar";
 
 export const links: LinksFunction = () => [
@@ -64,9 +61,10 @@ export default function App() {
   return (
     <Document>
       <TopBar user={user} />
-      <Outlet />
-      <LiveReload />
-      <ScrollRestoration />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </Document>
   );
 }
