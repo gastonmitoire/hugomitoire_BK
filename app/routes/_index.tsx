@@ -27,7 +27,7 @@ export default function Index() {
     console.log("Current index:", index);
   }
 
-  function renderCard(book: Book) {
+  function renderHero(book: Book) {
     return (
       <BookHero
         key={book.id}
@@ -49,7 +49,7 @@ export default function Index() {
         <Slider
           items={books}
           onChange={handleChange}
-          renderItem={renderCard}
+          renderItem={renderHero}
           autoPlay
         />
       ) : (
