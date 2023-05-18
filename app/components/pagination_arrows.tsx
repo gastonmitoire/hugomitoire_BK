@@ -1,21 +1,30 @@
-import React from "react";
+import { motion } from "framer-motion";
 
 interface PaginationArrowsProps {
   currentPage: number;
   totalPages: number;
-  onClick: (page: number) => void;
+  onNext: () => void;
+  onPrev: () => void;
+  className?: string;
 }
 
 export function PaginationArrows({
   currentPage,
   totalPages,
-  onClick,
+  onNext,
+  onPrev,
+  className,
 }: PaginationArrowsProps) {
   return (
-    <div className="flex justify-center items-center">
-      <button
-        className="w-3 h-3 rounded-full mx-1 bg-neutral-100"
-        onClick={() => onClick(currentPage - 1)}
+    <div className={`flex justify-between ${className}`}>
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        whileHover={{ scale: 1.3 }}
+        className={`rounded-full mx-1 p-5 ${
+          currentPage === 0 ? "invisible" : "visible"
+        }`}
+        onClick={onPrev}
         disabled={currentPage === 0}
       >
         <svg
@@ -32,10 +41,15 @@ export function PaginationArrows({
             d="M15.75 19.5L8.25 12l7.5-7.5"
           />
         </svg>
-      </button>
-      <button
-        className="w-3 h-3 rounded-full mx-1 bg-neutral-100"
-        onClick={() => onClick(currentPage + 1)}
+      </motion.button>
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        whileHover={{ scale: 1.3 }}
+        className={`rounded-full mx-1 p-5 ${
+          currentPage === totalPages - 1 ? "invisible" : "v"
+        }`}
+        onClick={onNext}
         disabled={currentPage === totalPages - 1}
       >
         <svg
@@ -52,7 +66,7 @@ export function PaginationArrows({
             d="M8.25 4.5l7.5 7.5-7.5 7.5"
           />
         </svg>
-      </button>
+      </motion.button>
     </div>
   );
 }

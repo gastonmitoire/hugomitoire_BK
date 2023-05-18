@@ -44,16 +44,18 @@ export function BookHero({ book, genre }: BookHeroProps) {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
+        <div
           className="w-full h-full"
           style={{
             background: `linear-gradient(3deg, rgba(10, 10, 10, 1) 5rem, rgba(10,10,10, 0.7), rgba(10,10,10, 0.3), rgba(10, 10, 10, 0.2), rgba(10, 10, 10, 0))`,
           }}
         >
-          <div className="container flex flex-col items-start justify-end w-full h-full space-y-4">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="container flex flex-col items-start justify-end w-full h-full space-y-4"
+          >
             <motion.div variants={item}>
               <h1 className="text-5xl font-bold">{title}</h1>
             </motion.div>
@@ -65,8 +67,8 @@ export function BookHero({ book, genre }: BookHeroProps) {
               <p>{genre?.name}</p>
               <p>{genre?.ageRange}</p>
             </motion.div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </motion.div>
     </div>
   );
