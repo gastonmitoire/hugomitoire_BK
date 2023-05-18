@@ -52,17 +52,20 @@ export function SliderGallery<T extends string | undefined>({
         {items.map((page, pageIndex) => (
           <div key={pageIndex} className="flex gap-3 w-full">
             {page.map((item, index) => (
-              <div key={index} className="object-fit">
+              <span
+                key={index}
+                className="p-0.5 rounded-sm border border-transparent contrast-100 cursor-pointer hover:border-primary hover:transition-colors hover:contrast-125 duration-300"
+              >
                 <img
                   src={item}
-                  className="object-contain"
+                  className="block object-contain"
                   style={{
                     width: imageWidth,
                     height: imageHeight,
                     ...imageStyles,
                   }}
                 />
-              </div>
+              </span>
             ))}
           </div>
         ))}

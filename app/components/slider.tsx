@@ -100,7 +100,7 @@ export function Slider<T>({
           currentPage={currentIndex}
           onNext={handleNext}
           onPrev={handlePrev}
-          className="absolute top-48 w-full"
+          className="absolute top-48 2xl:top-80 w-full"
         />
       )}
     </div>

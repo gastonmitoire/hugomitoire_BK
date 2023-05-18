@@ -63,7 +63,7 @@ export function ChapterList({ chapters }: ChapterListProps) {
                   to={`/libros/${chapter.title.replace(/ /g, "_")}/${
                     chapter.order
                   }`}
-                  className="block p-5 bg-neutral-900 bg-opacity-30 "
+                  className="block p-5 bg-neutral-900 bg-opacity-30"
                 >
                   {groupIndex * columnCount + columnIndex + 1} - {chapter.title}
                 </Link>

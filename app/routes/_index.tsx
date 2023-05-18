@@ -61,14 +61,17 @@ export default function Index() {
         )}
       </div>
 
-      <Header title="Libros" />
-      <div className="container py-3">
-        <SliderGallery
-          items={[books.map((book) => book.cover)]}
-          imageWidth={"auto"}
-          imageHeight={458.25}
-          hidePagination
-        />
+      <Header title="Libros" transparent colorClass="text-neutral-300" />
+      <div className="container flex flex-col gap-y-3 py-3">
+        <section>
+          <h5 className="pb-3 font-bold tracking-widest">Destacados</h5>
+          <SliderGallery
+            items={[books.map((book) => book.cover)]}
+            imageWidth={"auto"}
+            imageHeight={458.25}
+            hidePagination
+          />
+        </section>
       </div>
     </div>
   );
