@@ -76,19 +76,22 @@ export default function AdminRoute() {
   return (
     <div>
       <Header title="Admin Panel" />
-      <nav className="flex justify-evenly gap-3 text-neutral-700 dark:text-neutral-300">
-        {adminRoutes.map((route) => (
-          <Link
-            key={route.path}
-            to={route.path}
-            className={
-              location.pathname.includes(route.path) ? "text-red-500" : ""
-            }
-          >
-            {route.path}
-          </Link>
-        ))}
-      </nav>
+      <div className="container">
+        <nav className="flex justify-evenly gap-3 text-neutral-700 dark:text-neutral-300">
+          {adminRoutes.map((route) => (
+            <Link
+              key={route.path}
+              to={route.path}
+              className={
+                location.pathname.includes(route.path) ? "text-red-500" : ""
+              }
+            >
+              {route.path}
+            </Link>
+          ))}
+        </nav>
+        <Outlet />
+      </div>
     </div>
   );
 }
