@@ -6,6 +6,7 @@ import { Book } from ".prisma/client";
 import { db } from "~/utils/db.server";
 import { BookCard } from "../components/book_card";
 import { BookHero } from "~/components/book_hero";
+import { Button } from "~/components/button";
 import { Slider } from "~/components/slider";
 
 export const meta: V2_MetaFunction = () => {
@@ -27,7 +28,19 @@ export default function Index() {
   }
 
   function renderCard(book: Book) {
-    return <BookHero key={book.id} book={book} />;
+    return (
+      <BookHero
+        key={book.id}
+        book={book}
+        actions={
+          <div className="flex space-x-4">
+            <Button isLink to={`libros/${book.title.replace(/ /g, "_")}`}>
+              Leer
+            </Button>
+          </div>
+        }
+      />
+    );
   }
 
   return (

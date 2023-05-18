@@ -21,13 +21,14 @@ const item = {
 interface BookHeroProps {
   book: BookProps;
   genre?: GenreProps;
+  actions?: React.ReactNode;
 }
 
-export function BookHero({ book, genre }: BookHeroProps) {
+export function BookHero({ book, genre, actions }: BookHeroProps) {
   const { title, type, secondaryImage } = book;
 
   return (
-    <div className="h-[90vh] w-full">
+    <div className="h-[80vh] w-full">
       <motion.div
         initial={{
           opacity: 0,
@@ -67,6 +68,7 @@ export function BookHero({ book, genre }: BookHeroProps) {
               <p>{genre?.name}</p>
               <p>{genre?.ageRange}</p>
             </motion.div>
+            {actions && actions}
           </motion.div>
         </div>
       </motion.div>
