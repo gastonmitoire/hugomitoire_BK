@@ -18,6 +18,7 @@ import type { PropsWithChildren } from "react";
 import { User } from ".prisma/client";
 
 import { getUser } from "~/utils/session.server";
+import { Header } from "~/components/header";
 
 export const meta: V2_MetaFunction = () => {
   const description = "Libros del escritor argentino Hugo Mitoire";
@@ -44,14 +45,52 @@ export const loader = async ({ request }: LoaderArgs) => {
   //       status: 403,
   //     });
   //   }
-  console.log("user", user);
   return json(user);
 };
 
 export default function AdminRoute() {
+  const location = useLocation();
   const user = useLoaderData() as User;
 
-  return <div>Admin</div>;
+  const adminRoutes = [
+    {
+      path: "usuarios",
+    },
+    {
+      path: "libros",
+    },
+    {
+      path: "imagenes",
+    },
+    {
+      path: "capitulos",
+    },
+    {
+      path: "fragmentos",
+    },
+    {
+      path: "generos",
+    },
+  ];
+
+  return (
+    <div>
+      <Header title="Admin Panel" />
+      <nav className="flex justify-evenly gap-3 text-neutral-700 dark:text-neutral-300">
+        {adminRoutes.map((route) => (
+          <Link
+            key={route.path}
+            to={route.path}
+            className={
+              location.pathname.includes(route.path) ? "text-red-500" : ""
+            }
+          >
+            {route.path}
+          </Link>
+        ))}
+      </nav>
+    </div>
+  );
 }
 
 export function ErrorBoundary() {
