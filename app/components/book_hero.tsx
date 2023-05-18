@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-import { Book as BookProps } from "@prisma/client";
+import { Book as BookProps, Genre as GenreProps } from "@prisma/client";
 
 const container = {
   hidden: { opacity: 0 },
@@ -20,17 +20,14 @@ const item = {
 
 interface BookHeroProps {
   book: BookProps;
-  genre: {
-    name: string;
-    ageRange: string;
-  };
+  genre?: GenreProps;
 }
 
 export function BookHero({ book, genre }: BookHeroProps) {
   const { title, type, secondaryImage } = book;
 
   return (
-    <div className="h-[90vh]">
+    <div className="h-[90vh] w-full">
       <motion.div
         initial={{
           opacity: 0,
@@ -65,8 +62,8 @@ export function BookHero({ book, genre }: BookHeroProps) {
               className="flex items-start lg:items-center gap-5 font-body text-sm text-neutral-400 uppercase tracking-wide"
             >
               <p>{type}</p>
-              <p>{genre.name}</p>
-              <p>{genre.ageRange}</p>
+              <p>{genre?.name}</p>
+              <p>{genre?.ageRange}</p>
             </motion.div>
           </div>
         </motion.div>

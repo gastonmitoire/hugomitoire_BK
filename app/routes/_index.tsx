@@ -5,6 +5,7 @@ import { useLoaderData } from "@remix-run/react";
 import { Book } from ".prisma/client";
 import { db } from "~/utils/db.server";
 import { BookCard } from "../components/book_card";
+import { BookHero } from "~/components/book_hero";
 import { Slider } from "~/components/slider";
 
 export const meta: V2_MetaFunction = () => {
@@ -13,13 +14,7 @@ export const meta: V2_MetaFunction = () => {
 
 export const loader = async ({ request }: LoaderArgs) => {
   console.log("request", request);
-  const books = await db.book.findMany({
-    include: {
-      chapters: true,
-      genre: true,
-      comments: true,
-    },
-  });
+  const books = await db.book.findMany({});
 
   return json({ books });
 };
@@ -31,24 +26,8 @@ export default function Index() {
     console.log("Current index:", index);
   }
 
-  function renderCard(item: {
-    title: string;
-    cover: string;
-    secondaryImage: string;
-    description: string;
-    type: string;
-    genre: { name: string };
-  }) {
-    return (
-      <BookCard
-        title={item.title}
-        cover={item.cover}
-        secondaryImage={item.secondaryImage}
-        description={item.description}
-        type={item.type}
-        genre={item.genre}
-      />
-    );
+  function renderCard(book: Book) {
+    return <BookHero key={book.id} book={book} />;
   }
 
   return (

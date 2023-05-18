@@ -64,7 +64,7 @@ model Book {
   title           String    @unique
   description     String
   type            String
-  publicationDate DateTime
+  publicationDate String
   cover           String
   secondaryImage  String
 }
