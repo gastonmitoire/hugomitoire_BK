@@ -23,7 +23,7 @@ export function TopBar({ user }: TopBarProps) {
     <nav
       aria-label="Main navigation"
       role="navigation"
-      className="sticky top-0 left-0 w-full bg-black bg-opacity-95"
+      className="sticky top-0 left-0 z-10 w-full bg-black bg-opacity-95"
     >
       <span className="container mx-auto flex items-center justify-between w-full h-16 px-3 md:p-0">
         <div className="flex-1">

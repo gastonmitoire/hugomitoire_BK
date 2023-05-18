@@ -54,7 +54,7 @@ export default function LibroRoute() {
         <nav
           aria-label="Sub navigation"
           role="navigation"
-          className="sticky top-0 left-0 uppercase bg-neutral-950 h-full hidden lg:block"
+          className="sticky top-0 left-0 z-20 uppercase bg-neutral-950 h-full hidden lg:block"
         >
           <ul className="flex items-center justify-center gap-5 py-5 z-10">
             <li
