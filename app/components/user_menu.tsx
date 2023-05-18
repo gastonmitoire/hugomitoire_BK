@@ -106,7 +106,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
         transition={{ duration: 0.2 }}
       >
         <div className="py-1">
-          {user.role !== "ADMIN" && (
+          {user && user.role === "ADMIN" && (
             <Link
               to="/admin"
               onClick={toggleMenu}
