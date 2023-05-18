@@ -48,7 +48,7 @@ export default function LibroRoute() {
 
   return (
     <div className="min-h-[90vh]">
-      <BookHero book={book} genre={book.genre} />
+      <BookHero book={book} genre={book.genre} className="h-[80vh]" />
 
       <div className="relative">
         <nav

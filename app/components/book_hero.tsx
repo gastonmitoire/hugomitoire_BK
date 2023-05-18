@@ -22,13 +22,14 @@ interface BookHeroProps {
   book: BookProps;
   genre?: GenreProps;
   actions?: React.ReactNode;
+  className?: string;
 }
 
-export function BookHero({ book, genre, actions }: BookHeroProps) {
+export function BookHero({ book, genre, actions, className }: BookHeroProps) {
   const { title, type, secondaryImage } = book;
 
   return (
-    <div className="h-[80vh] w-full">
+    <div className={`h-[90vh] w-full ${className}`}>
       <motion.div
         initial={{
           opacity: 0,
