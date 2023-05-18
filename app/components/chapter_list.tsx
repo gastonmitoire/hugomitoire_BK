@@ -28,7 +28,6 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, y: -50 },
-  show: { opacity: 1, y: 0 },
 };
 
 export function ChapterList({ chapters }: ChapterListProps) {
@@ -40,33 +39,40 @@ export function ChapterList({ chapters }: ChapterListProps) {
   );
 
   return (
-    <motion.ul className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-2 w-full">
+    <ul className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-2 w-full">
       {columnGroups.map((column, groupIndex) => (
         <motion.div
           key={groupIndex}
           className="flex flex-col gap-2 w-full py-1"
           initial="hidden"
-          animate="show"
+          whileInView="show"
+          viewport={{ once: true }}
+          transition={{ delayChildren: 0.5 }}
           variants={container}
         >
           {column.map((chapter, columnIndex) => (
-            <motion.span
-              key={chapter.id}
-              className="p-0.5 rounded-sm border border-transparent hover:border-primary hover:transition-colors duration-300"
-              variants={item}
-            >
-              <Link
-                to={`/libros/${chapter.title.replace(/ /g, "_")}/${
-                  chapter.order
-                }`}
-                className="block p-5 bg-neutral-900 bg-opacity-30 "
+            <AnimatePresence>
+              <motion.span
+                key={chapter.id}
+                className="p-0.5 rounded-sm border border-transparent hover:border-primary hover:transition-colors duration-300"
+                transition={{ delay: columnIndex * 0.1 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                variants={item}
               >
-                {groupIndex * columnCount + columnIndex + 1} - {chapter.title}
-              </Link>
-            </motion.span>
+                <Link
+                  to={`/libros/${chapter.title.replace(/ /g, "_")}/${
+                    chapter.order
+                  }`}
+                  className="block p-5 bg-neutral-900 bg-opacity-30 "
+                >
+                  {groupIndex * columnCount + columnIndex + 1} - {chapter.title}
+                </Link>
+              </motion.span>
+            </AnimatePresence>
           ))}
         </motion.div>
       ))}
-    </motion.ul>
+    </ul>
   );
 }

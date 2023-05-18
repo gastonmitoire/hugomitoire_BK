@@ -21,7 +21,7 @@ import globalStylesheet from "~/styles/global.css";
 import { getUser } from "./utils/session.server";
 import { Breadcrumbs } from "~/components/breadcrumbs";
 import { Document } from "~/components/document";
-import { Header } from "~/components/header";
+import { TopBar } from "~/components/topbar";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -63,7 +63,7 @@ export default function App() {
 
   return (
     <Document>
-      <Header user={user} />
+      <TopBar user={user} />
       <Outlet />
       <LiveReload />
       <ScrollRestoration />
