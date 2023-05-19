@@ -54,22 +54,22 @@ export default function AdminRoute() {
 
   const adminRoutes = [
     {
-      path: "usuarios",
+      path: "users",
     },
     {
-      path: "libros",
+      path: "books",
     },
     {
-      path: "imagenes",
+      path: "images",
     },
     {
-      path: "capitulos",
+      path: "chapters",
     },
     {
-      path: "fragmentos",
+      path: "texts",
     },
     {
-      path: "generos",
+      path: "genres",
     },
   ];
 
