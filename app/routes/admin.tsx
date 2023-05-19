@@ -40,11 +40,11 @@ export const loader = async ({ request }: LoaderArgs) => {
       }
     );
   }
-  if (user.role !== "ADMIN") {
-    throw new Response("No tenés permisos para ver esta página", {
-      status: 403,
-    });
-  }
+  // if (user.role !== "ADMIN") {
+  //   throw new Response("No tenés permisos para ver esta página", {
+  //     status: 403,
+  //   });
+  // }
   return json(user);
 };
 
