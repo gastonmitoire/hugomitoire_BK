@@ -74,11 +74,11 @@ model Image {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   fanarts   Fanart[]
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  mimetype  String?
+  encoding  String?
   filename  String
-  mimetype  String
-  encoding  String
   url       String
 }
 
