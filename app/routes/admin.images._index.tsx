@@ -44,7 +44,7 @@ export const action = async ({ request, params }: ActionArgs) => {
       },
     });
 
-    return redirect("/admin/imagenes");
+    return redirect("/admin/images");
   } catch (error) {
     console.error("Error al guardar el archivo:", error);
     return badRequest({

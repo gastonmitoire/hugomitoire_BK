@@ -135,7 +135,7 @@ export const action = async ({ request }: ActionArgs) => {
     data: fields,
   });
 
-  return redirect("/admin/libros");
+  return redirect("/admin/books");
 };
 
 export const loader = async ({ params }: LoaderArgs) => {
