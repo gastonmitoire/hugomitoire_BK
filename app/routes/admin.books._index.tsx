@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { redirect, json } from "@remix-run/node";
 import {
@@ -13,6 +14,7 @@ import { badRequest } from "~/utils/request.server";
 
 import { Button } from "~/components/button";
 import { List } from "~/components/list";
+import { Modal } from "~/components/modal";
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   const books = await db.book.findMany();
@@ -20,11 +22,22 @@ export const loader = async ({ request, params }: LoaderArgs) => {
 };
 
 export default function AdminBooksRoute() {
+  const [showModal, setShowModal] = useState(false);
+  const [deleteBook, setDeleteBook] = useState("");
   const navigate = useNavigate();
   const { books } = useLoaderData();
 
   const handleListClick = (item: string) => {
     navigate(`/admin/books/${item}`);
+  };
+
+  const handleDelete = async (item: string) => {
+    setDeleteBook(item);
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
   };
 
   return (
@@ -36,7 +49,26 @@ export default function AdminBooksRoute() {
           height={370}
           className="overflow-y-auto py-3"
           clickHandler={handleListClick}
+          deleteHandler={handleDelete}
         />
+
+        <Modal open={showModal} onClose={handleModalClose}>
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl font-bold">¿Estás seguro?</h2>
+            <Form method="delete" action={`/admin/books/${deleteBook}`}>
+              <Button
+                type="button"
+                className="bg-neutral-900 hover:bg-neutral-800"
+                onClick={handleModalClose}
+              >
+                Cancelar
+              </Button>
+              <Button type="submit" className="bg-red-600 hover:bg-red-700">
+                Eliminar
+              </Button>
+            </Form>
+          </div>
+        </Modal>
       </div>
     </div>
   );

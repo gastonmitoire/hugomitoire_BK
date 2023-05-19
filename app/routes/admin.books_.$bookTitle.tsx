@@ -12,6 +12,24 @@ import { ChapterList } from "~/components/chapter_list";
 import { Header } from "~/components/header";
 import { List } from "~/components/list";
 
+export const action = async ({ request, params }: LoaderArgs) => {
+  if (request.method === "DELETE") {
+    const formatedTitle = params.bookTitle?.replace(/_/g, " ");
+    const book = await db.book.findUnique({
+      where: { title: formatedTitle },
+    });
+    if (!book) {
+      return json(
+        { message: `No book found with the title ${params.bookTitle}` },
+        { status: 404 }
+      );
+    }
+
+    await db.book.delete({ where: { title: book.title } });
+    return json({ message: `Book ${params.bookTitle} deleted` });
+  }
+};
+
 export const loader = async ({ params }: LoaderArgs) => {
   const formatedTitle = params.bookTitle?.replace(/_/g, " ");
   const book = await db.book.findUnique({
