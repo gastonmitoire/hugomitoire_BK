@@ -105,7 +105,7 @@ export default function AdminRoute() {
                         <ul className="border-l-8 border-neutral-700 border-opacity-10">
                           <li>
                             <Link
-                              to={`/admin/${route.path}/nuevo`}
+                              to={`/admin/${route.path}/new`}
                               className="flex items-center justify-between p-1.5 bg-neutral-800 bg-opacity-5 hover:bg-opacity-10"
                             >
                               Nuevo
