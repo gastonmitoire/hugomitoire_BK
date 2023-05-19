@@ -77,20 +77,52 @@ export default function AdminRoute() {
     <div>
       <Header title="Admin Panel" />
       <div className="container">
-        <nav className="flex justify-evenly gap-3 text-neutral-700 dark:text-neutral-300">
-          {adminRoutes.map((route) => (
-            <Link
-              key={route.path}
-              to={route.path}
-              className={
-                location.pathname.includes(route.path) ? "text-red-500" : ""
-              }
+        <div className="flex">
+          <div className="flex-0">
+            <nav
+              aria-label="Admin navigation"
+              className="p-5"
+              role="navigation"
             >
-              {route.path}
-            </Link>
-          ))}
-        </nav>
-        <Outlet />
+              <ul className="flex flex-col gap-3">
+                {adminRoutes.map((route) => {
+                  const isActive = location.pathname.includes(route.path);
+                  return (
+                    <li
+                      key={route.path}
+                      className={`${
+                        isActive ? "font-bold" : ""
+                      } uppercase text-sm font-body`}
+                    >
+                      <Link
+                        to={`/admin/${isActive ? "" : route.path}`}
+                        className="flex items-center justify-between p-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20"
+                      >
+                        {route.path}
+                      </Link>
+
+                      {isActive && (
+                        <ul className="border-l-8 border-neutral-700 border-opacity-10">
+                          <li>
+                            <Link
+                              to={`/admin/${route.path}/nuevo`}
+                              className="flex items-center justify-between p-1.5 bg-neutral-800 bg-opacity-5 hover:bg-opacity-10"
+                            >
+                              Nuevo
+                            </Link>
+                          </li>
+                        </ul>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
+          <div className="flex-1">
+            <Outlet />
+          </div>
+        </div>
       </div>
     </div>
   );
