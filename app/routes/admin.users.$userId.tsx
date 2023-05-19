@@ -82,7 +82,7 @@ export const action = async ({ request, params }: ActionArgs) => {
 
   console.log("RES ", user);
 
-  return redirect(`/admin/usuarios/${user.id}`);
+  return redirect(`/admin/users/${user.id}`);
 };
 
 export const loader = async ({ params }: LoaderArgs) => {

@@ -79,7 +79,7 @@ export const action = async ({ request }: ActionArgs) => {
     data: fields,
   });
 
-  return redirect(`/admin/generos/`);
+  return redirect(`/admin/genres/`);
 };
 
 export default function AdminGenerosNewRoute() {
@@ -88,7 +88,7 @@ export default function AdminGenerosNewRoute() {
   return (
     <div>
       <h2>Crear género</h2>
-      <Form action="/admin/generos/new" method="post">
+      <Form action="/admin/genres/new" method="post">
         <div>
           <label htmlFor="name">Nombre</label>
           <input
