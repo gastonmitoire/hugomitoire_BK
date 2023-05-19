@@ -89,24 +89,17 @@ export default function LibroRoute() {
           <BookDetails book={book} />
         </motion.section>
 
-        <motion.section
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          id="chapters-section"
-          className="scroll-m-16"
-        >
+        <section id="chapters-section" className="scroll-m-16">
           <Header title="Capítulos" />
           <div className="py-8">
             <ChapterList chapters={chapters} />
           </div>
-        </motion.section>
+        </section>
 
-        <motion.section id="gallery-section" className="scroll-m-16">
+        <section id="gallery-section" className="scroll-m-16">
           <Header title="Galería" />
           <motion.div className="py-8"></motion.div>
-        </motion.section>
+        </section>
       </div>
     </div>
   );
