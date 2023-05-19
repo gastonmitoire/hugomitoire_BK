@@ -5,6 +5,7 @@ import {
   useActionData,
   useLoaderData,
   useSearchParams,
+  useNavigate,
 } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
@@ -19,10 +20,11 @@ export const loader = async ({ request, params }: LoaderArgs) => {
 };
 
 export default function AdminBooksRoute() {
+  const navigate = useNavigate();
   const { books } = useLoaderData();
 
   const handleListClick = (item: string) => {
-    console.log(item);
+    navigate(`/admin/books/${item}`);
   };
 
   return (
