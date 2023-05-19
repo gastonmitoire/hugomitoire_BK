@@ -3,6 +3,7 @@ import { redirect, json } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import path from "path";
 import fs from "fs/promises";
+import sharp from "sharp";
 import { db } from "~/utils/db.server";
 import { badRequest } from "~/utils/request.server";
 
@@ -21,22 +22,24 @@ export const action = async ({ request, params }: ActionArgs) => {
 
   const uploadedFile = file as File;
   const fileName = uploadedFile.name;
-  const filePath = path.join("public", "images", fileName);
-  const fileUrl = `/images/${fileName}`;
+  const fileExtension = path.extname(fileName); // Obtener la extensión del archivo original
+  const fileNameWithoutExtension = path.basename(fileName, fileExtension);
+  const webpFileName = `${fileNameWithoutExtension}.webp`; // Nombre del archivo con extensión WebP
+  const filePath = path.join("public", "images", webpFileName); // Ruta del archivo WebP
+  const fileUrl = `/images/${webpFileName}`; // URL del archivo WebP
 
   try {
     // Obtener los datos binarios del archivo
     const arrayBuffer = await uploadedFile.arrayBuffer();
     const fileContent = new Uint8Array(arrayBuffer);
 
-    // Realizar la escritura del archivo según tu entorno de ejecución
-    // Por ejemplo, si estás utilizando Node.js, puedes usar fs.writeFile
-    fs.writeFile(filePath, fileContent);
+    // Utilizar sharp para convertir la imagen a WebP y guardarla
+    await sharp(fileContent).webp().toFile(filePath);
 
     // Guardar la referencia de la URL de la imagen en la base de datos utilizando Prisma
     const image = await db.image.create({
       data: {
-        filename: fileName,
+        filename: webpFileName, // Guardar el nombre del archivo con extensión WebP
         url: fileUrl,
       },
     });
@@ -73,7 +76,7 @@ export default function AdminImagesRoute() {
           <span>Archivo:</span>
           <input type="file" name="file" />
         </label>
-        <Button type="submit">Subir</Button>
+        <button type="submit">Subir</button>
       </Form>
       <ul>
         {data.images.map((image: any) => (
