@@ -21,6 +21,10 @@ export const loader = async ({ request, params }: LoaderArgs) => {
 export default function AdminBooksRoute() {
   const { books } = useLoaderData();
 
+  const handleListClick = (item: string) => {
+    console.log(item);
+  };
+
   return (
     <div className="grid grid-cols-2">
       <div className="col-span-1">
@@ -29,6 +33,7 @@ export default function AdminBooksRoute() {
           items={books.map((book: any) => book.title)}
           height={370}
           className="overflow-y-auto py-3"
+          clickHandler={handleListClick}
         />
       </div>
     </div>
