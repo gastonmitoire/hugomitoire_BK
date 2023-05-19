@@ -162,7 +162,7 @@ export default function AdminBooksNewRoute() {
   return (
     <div>
       <h3 className="text-3xl text-neutral-950 py-5">Nuevo Libro</h3>
-      <Form action="/admin/libros/new" method="post">
+      <Form action="/admin/books/new" method="post">
         <div className="grid grid-cols-2 gap-4">
           <div className="grid grid-cols-2 gap-3">
             <div className="col-span-2">
