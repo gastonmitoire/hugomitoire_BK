@@ -28,7 +28,7 @@ export default function AdminBooksRoute() {
   const { books } = useLoaderData();
 
   const handleListClick = (item: string) => {
-    navigate(`/admin/books`);
+    navigate(`/admin/books/${item}`);
   };
 
   const handleDelete = async (item: string) => {
