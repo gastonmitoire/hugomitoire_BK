@@ -9,6 +9,15 @@ import { badRequest } from "~/utils/request.server";
 
 import { Button } from "~/components/button";
 
+function formatImageName(imageName: string) {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const dayOfMonth = date.getDate();
+
+  return `${year}-${month}-${dayOfMonth}-${imageName}`;
+}
+
 export const action = async ({ request, params }: ActionArgs) => {
   const form = await request.formData();
   const file = form.get("file");
@@ -24,7 +33,17 @@ export const action = async ({ request, params }: ActionArgs) => {
   const fileName = uploadedFile.name;
   const fileExtension = path.extname(fileName); // Obtener la extensión del archivo original
   const fileNameWithoutExtension = path.basename(fileName, fileExtension);
-  const webpFileName = `${fileNameWithoutExtension}.webp`; // Nombre del archivo con extensión WebP
+
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const formattedDate = `${year}${month}${day}`;
+
+  const newFileName = `${formattedDate}_${fileNameWithoutExtension
+    .replace(/[^\w]+/g, "-")
+    .toLocaleLowerCase()}`;
+  const webpFileName = `${newFileName}.webp`; // Nombre del archivo con extensión WebP
   const filePath = path.join("public", "images", webpFileName); // Ruta del archivo WebP
   const fileUrl = `/images/${webpFileName}`; // URL del archivo WebP
 
