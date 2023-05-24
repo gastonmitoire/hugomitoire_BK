@@ -11,6 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   disableAnimation?: boolean;
   isLink?: boolean;
   to?: string;
+  onClick?: () => void;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,6 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
   disableAnimation = false,
   isLink = false,
   to,
+  onClick,
 }) => {
   const buttonSizeClasses = {
     small: "px-2 py-1 text-xs rounded-sm",
@@ -70,6 +72,7 @@ export const Button: React.FC<ButtonProps> = ({
     </Link>
   ) : (
     <motion.button
+      onClick={onClick}
       {...(disableAnimation ? {} : animation)}
       className={`flex items-center justify-center gap-2 ${buttonSizeClasses[size]} ${buttonColorClasses[color]} ${className}`}
     >
