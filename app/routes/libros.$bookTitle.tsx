@@ -31,6 +31,14 @@ export const loader = async ({ params }: LoaderArgs) => {
   const chapters = await db.chapter.findMany({
     where: { bookId: book.id },
     orderBy: { order: "asc" },
+    include: {
+      text: true,
+      book: {
+        select: {
+          title: true,
+        },
+      },
+    },
   });
 
   return json({ book, chapters });
@@ -48,7 +56,30 @@ export default function LibroRoute() {
 
   return (
     <div className="min-h-[90vh]">
-      <BookHero book={book} genre={book.genre} className="h-[80vh]" />
+      <div className="relative">
+        {/* GO BACK BUTTON */}
+        <button
+          className="absolute top-0 left-0 z-20 p-5"
+          onClick={() => history.back()}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+            />
+          </svg>
+        </button>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-neutral-950 via-transparent to-transparent z-10"></div>
+        <BookHero book={book} genre={book.genre} className="h-[80vh]" />
+      </div>
 
       <div className="relative">
         <nav

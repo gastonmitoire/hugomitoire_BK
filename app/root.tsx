@@ -60,11 +60,13 @@ export default function App() {
   const location = useLocation();
   const { user } = useLoaderData() as AppProps;
 
+  const isNoLayoutPath = /^\/libros\/[^/]+(\/|$)/.test(location.pathname);
+
   return (
     <Document>
-      {location.pathname.includes("admin") ? null : <TopBar user={user} />}
+      {isNoLayoutPath ? null : <TopBar user={user} />}
       <Outlet />
-      {location.pathname.includes("admin") ? null : <Footer />}
+      {isNoLayoutPath ? null : <Footer />}
     </Document>
   );
 }
