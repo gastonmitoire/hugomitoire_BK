@@ -28,7 +28,7 @@ export default function AdminBooksRoute() {
   const { books } = useLoaderData();
 
   const handleListClick = (item: string) => {
-    navigate(`/admin/books/${item}`);
+    navigate(`/admin/books/${item.replace(/ /g, "_")}`);
   };
 
   const handleDelete = async (item: string) => {
@@ -41,9 +41,10 @@ export default function AdminBooksRoute() {
   };
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-1">
       <div className="col-span-1">
         <h1 className="text-2xl font-bold">Libros</h1>
+
         <List
           items={books.map((book: any) => book.title)}
           height={370}
@@ -51,25 +52,24 @@ export default function AdminBooksRoute() {
           clickHandler={handleListClick}
           deleteHandler={handleDelete}
         />
-
-        <Modal open={showModal} onClose={handleModalClose}>
-          <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-bold">¿Estás seguro?</h2>
-            <Form method="delete" action={`/admin/books/${deleteBook}`}>
-              <Button
-                type="button"
-                className="bg-neutral-900 hover:bg-neutral-800"
-                onClick={handleModalClose}
-              >
-                Cancelar
-              </Button>
-              <Button type="submit" className="bg-red-600 hover:bg-red-700">
-                Eliminar
-              </Button>
-            </Form>
-          </div>
-        </Modal>
       </div>
+      <Modal open={showModal} onClose={handleModalClose}>
+        <div className="flex flex-col gap-3">
+          <h2 className="text-xl font-bold">¿Estás seguro?</h2>
+          <Form method="delete" action={`/admin/books/${deleteBook}`}>
+            <Button
+              type="button"
+              className="bg-neutral-900 hover:bg-neutral-800"
+              onClick={handleModalClose}
+            >
+              Cancelar
+            </Button>
+            <Button type="submit" className="bg-red-600 hover:bg-red-700">
+              Eliminar
+            </Button>
+          </Form>
+        </div>
+      </Modal>
     </div>
   );
 }

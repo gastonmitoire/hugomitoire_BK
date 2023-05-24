@@ -8,7 +8,9 @@ import { db } from "~/utils/db.server";
 
 import { BookDetails } from "~/components/book_details";
 import { BookHero } from "~/components/book_hero";
+import { Button } from "~/components/button";
 import { ChapterList } from "~/components/chapter_list";
+import { ChapterForm } from "~/components/chapter_form";
 import { Header } from "~/components/header";
 import { List } from "~/components/list";
 
@@ -57,7 +59,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 
 export default function AdminBookByTitleRoute() {
   const { book, chapters } = useLoaderData();
-  const [createChapter, setCreateChapter] = useState(true);
+  const [createChapter, setCreateChapter] = useState(false);
 
   const handleChapterClick = (item: string) => {
     console.log(item);
@@ -68,10 +70,18 @@ export default function AdminBookByTitleRoute() {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-3 p-3">
+    <div className="grid grid-cols-2 gap-3">
+      <nav
+        aria-label="Admin book menu"
+        className="col-span-2 rounded-lg border-2 border-neutral-800"
+      >
+        <ul className="flex items-center justify-between p-5"></ul>
+      </nav>
+
       <div className="col-span-1">
         <BookHero book={book} />
       </div>
+
       <div className="col-span-1 grid gap-3">
         <button
           className="w-full py-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20"
@@ -79,31 +89,9 @@ export default function AdminBookByTitleRoute() {
         >
           {createChapter ? "Cancelar" : "Crear capítulo"}
         </button>
-        {createChapter ? (
-          <Form
-            action="/admin/chapters/new"
-            method="post"
-            className="flex flex-col gap-1.5 p-3"
-          >
-            <input
-              name="order"
-              type="number"
-              placeholder="Orden"
-              className="w-full p-3 bg-neutral-700 bg-opacity-10"
-            />
-            <input
-              name="title"
-              type="text"
-              placeholder="Título"
-              className="w-full p-3 bg-neutral-700 bg-opacity-10"
-            />
-            <input name="bookId" type="hidden" value={book.id} />
-            <button className="w-full py-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20">
-              Crear
-            </button>
-          </Form>
-        ) : null}
+        {createChapter ? <ChapterForm bookId={book.id} /> : null}
         <List
+          height={370}
           items={chapters.map(
             (chapter: any) => chapter.order + " | " + chapter.title
           )}

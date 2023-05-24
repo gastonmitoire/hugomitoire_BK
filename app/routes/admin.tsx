@@ -18,6 +18,7 @@ import type { PropsWithChildren } from "react";
 import { User } from ".prisma/client";
 
 import { getUser } from "~/utils/session.server";
+import { Button } from "~/components/button";
 import { Header } from "~/components/header";
 
 export const meta: V2_MetaFunction = () => {
@@ -75,7 +76,6 @@ export default function AdminRoute() {
 
   return (
     <div>
-      <Header title="Admin Panel" />
       <div className="container">
         <div className="flex">
           <div className="flex-0">
@@ -119,7 +119,7 @@ export default function AdminRoute() {
               </ul>
             </nav>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 py-5">
             <Outlet />
           </div>
         </div>
