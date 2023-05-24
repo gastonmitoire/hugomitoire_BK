@@ -11,6 +11,7 @@ interface SliderGalleryProps<T extends string | undefined> {
   imageStyles?: React.CSSProperties;
   hidePagination?: boolean;
   hideArrows?: boolean;
+  objectFit?: "contain" | "cover";
 }
 
 export function SliderGallery<T extends string | undefined>({
@@ -20,6 +21,7 @@ export function SliderGallery<T extends string | undefined>({
   imageStyles,
   hidePagination,
   hideArrows,
+  objectFit = "contain",
 }: SliderGalleryProps<T>) {
   const [currentPage, setCurrentPage] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -58,10 +60,11 @@ export function SliderGallery<T extends string | undefined>({
               >
                 <img
                   src={item}
-                  className="block object-contain"
+                  className="block"
                   style={{
                     width: imageWidth,
                     height: imageHeight,
+                    objectFit,
                     ...imageStyles,
                   }}
                 />

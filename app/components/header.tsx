@@ -1,10 +1,11 @@
 import React from "react";
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   children?: React.ReactNode;
   transparent?: boolean;
   colorClass?: string;
+  dense?: boolean;
 }
 
 export function Header({
@@ -12,12 +13,13 @@ export function Header({
   children,
   transparent,
   colorClass,
+  dense,
 }: HeaderProps) {
   return (
     <header
-      className={`w-full h-24 flex items-center justify-center ${
-        transparent ? "bg-transparent" : "bg-white"
-      }`}
+      className={`flex flex-col ${dense ? "pt-4 pb-2" : "pt-8 pb-4"} ${
+        transparent ? "bg-transparent" : "bg-neutral-100"
+      } `}
     >
       <div className="container mx-auto">
         <h1
