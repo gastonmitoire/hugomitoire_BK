@@ -7,8 +7,8 @@ import { Button } from "./button";
 import { ImagePicker } from "./image_picker";
 
 interface BookFieldsProps {
-  users?: User[];
   book?: Book;
+  users?: User[];
   images?: Image[];
   genres?: Genre[];
 }
