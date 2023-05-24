@@ -1,20 +1,68 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { motion } from "framer-motion";
 
 import { db } from "~/utils/db.server";
 
-import { BookDetails } from "~/components/book_details";
+import { BookFields } from "~/components/book_fields";
 import { BookHero } from "~/components/book_hero";
 import { Button } from "~/components/button";
-import { ChapterList } from "~/components/chapter_list";
 import { ChapterForm } from "~/components/chapter_form";
-import { Header } from "~/components/header";
 import { List } from "~/components/list";
 
 export const action = async ({ request, params }: LoaderArgs) => {
+  if (request.method === "PUT") {
+    const formatedTitle = params.bookTitle?.replace(/_/g, " ");
+    const book = await db.book.findUnique({
+      where: { title: formatedTitle },
+    });
+    if (!book) {
+      return json(
+        { message: `No book found with the title ${params.bookTitle}` },
+        { status: 404 }
+      );
+    }
+
+    const body = new URLSearchParams(await request.text());
+    const title = body.get("title");
+    const description = body.get("description");
+    const publicationDate = body.get("publicationDate");
+    const genre = body.get("genre");
+    const cover = body.get("cover");
+    const secondaryImage = body.get("secondaryImage");
+    const illustratorId = body.get("illustratorId");
+    const publisherId = body.get("publisherId");
+
+    if (
+      typeof title !== "string" ||
+      typeof description !== "string" ||
+      typeof publicationDate !== "string" ||
+      typeof genre !== "string" ||
+      typeof cover !== "string" ||
+      typeof secondaryImage !== "string" ||
+      typeof illustratorId !== "string" ||
+      typeof publisherId !== "string"
+    ) {
+      return json({ message: "Invalid body" }, { status: 400 });
+    }
+
+    const updatedBook = await db.book.update({
+      where: { title: formatedTitle },
+      data: {
+        title,
+        description,
+        publicationDate,
+        genreId: genre!,
+        cover,
+        secondaryImage,
+        illustratorId,
+        publisherId,
+      },
+    });
+
+    return json({ message: `Book ${updatedBook.title} updated` });
+  }
   if (request.method === "DELETE") {
     const formatedTitle = params.bookTitle?.replace(/_/g, " ");
     const book = await db.book.findUnique({
@@ -34,6 +82,9 @@ export const action = async ({ request, params }: LoaderArgs) => {
 
 export const loader = async ({ params }: LoaderArgs) => {
   const formatedTitle = params.bookTitle?.replace(/_/g, " ");
+  const users = await db.user.findMany();
+  const images = await db.image.findMany();
+  const genres = await db.genre.findMany();
   const book = await db.book.findUnique({
     where: { title: formatedTitle },
     include: {
@@ -54,13 +105,16 @@ export const loader = async ({ params }: LoaderArgs) => {
     orderBy: { order: "desc" },
   });
 
-  return json({ book, chapters });
+  return json({ book, chapters, images, genres, users });
 };
 
 export default function AdminBookByTitleRoute() {
-  const { book, chapters } = useLoaderData();
+  const { book, chapters, images, genres, users } = useLoaderData();
   const [createChapter, setCreateChapter] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
+
+  const [selectedCover, setSelectedCover] = useState("");
+  const [selectedSecondaryImage, setSelectedSecondaryImage] = useState("");
 
   const handleChapterClick = (item: string) => {
     console.log(item);
@@ -74,6 +128,10 @@ export default function AdminBookByTitleRoute() {
     setIsEditing((prev) => !prev);
   };
 
+  const handleFormChange = (event: React.FormEvent) => {
+    console.log("TARGET ", event.currentTarget);
+  };
+
   return (
     <div className="grid grid-cols-2 gap-3">
       <nav
@@ -84,6 +142,7 @@ export default function AdminBookByTitleRoute() {
           <li>
             <Button
               disableAnimation
+              color="secondary"
               type="button"
               className="bg-neutral-900 hover:bg-neutral-800"
               onClick={toggleIsEditing}
@@ -95,7 +154,18 @@ export default function AdminBookByTitleRoute() {
       </nav>
 
       {isEditing ? (
-        <BookDetails book={book} />
+        <Form method="PUT" className="col-span-2 grid gap-3">
+          <BookFields
+            book={book}
+            images={images}
+            genres={genres}
+            users={users}
+          />
+
+          <Button type="submit" size="large" className="place-self-end">
+            Guardar
+          </Button>
+        </Form>
       ) : (
         <>
           <div className="col-span-1">

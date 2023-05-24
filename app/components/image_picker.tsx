@@ -3,36 +3,35 @@ import React from "react";
 import { Image } from "@prisma/client";
 
 interface ImagePickerProps {
-  images?: Image[];
-  selectedImage?: string;
-  setSelectedImage?: React.Dispatch<React.SetStateAction<string>>;
+  images: Image[];
+  name: string;
+  selectedImage?: Image["url"];
+  onSelectImage: (image: Image) => void;
 }
 
 export function ImagePicker({
   images,
+  name,
   selectedImage,
-  setSelectedImage,
+  onSelectImage,
 }: ImagePickerProps) {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedImage && setSelectedImage(event.target.value);
-  };
-
   return (
-    <div className="flex flex-col space-y-4">
-      <div className="flex flex-row space-x-4">
-        {images?.map((image) => (
-          <label key={image.id}>
+    <fieldset className="grid grid-cols-4 gap-3">
+      {images.map((image) => (
+        <div key={image.id} className="flex">
+          <label>
             <input
+              className="mr-2"
               type="radio"
-              name="image"
+              name={name}
+              id={`${name}-${image.filename}`}
               value={image.url}
-              checked={selectedImage === image.url}
-              onChange={handleChange}
+              defaultChecked={selectedImage === image.url}
             />
-            <img src={image.url} alt={image.filename} className="h-24" />
+            <img className="w-20 h-20 object-cover" src={image.url} alt="" />
           </label>
-        ))}
-      </div>
-    </div>
+        </div>
+      ))}
+    </fieldset>
   );
 }
