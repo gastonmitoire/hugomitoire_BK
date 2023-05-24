@@ -43,12 +43,12 @@ export default function AdminChapterById() {
       </Header>
       <div className="flex flex-col items-center justify-center w-full h-full">
         {chapter.text.length > 0 ? (
-          <div className="flex flex-col items-center justify-center w-full h-full">
+          <div className="grid grid-cols-3 gap-5 py-5">
             {chapter.text.map((text) => (
-              <div key={text.id} className="flex flex-col items-center">
-                <h5 className="py-3 text-2xl font-bold text-neutral-700">
-                  {text.title}
-                </h5>
+              <div
+                key={text.id}
+                className="flex flex-col items-center px-3 h-52 overflow-auto shadow shadow-neutral-800"
+              >
                 <p className="py-3 text-lg text-neutral-700">{text.content}</p>
               </div>
             ))}
