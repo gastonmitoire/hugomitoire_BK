@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
 
@@ -61,7 +61,7 @@ export const action = async ({ request, params }: LoaderArgs) => {
       },
     });
 
-    return json({ message: `Book ${updatedBook.title} updated` });
+    return redirect(`/admin/books/${updatedBook.title}`);
   }
   if (request.method === "DELETE") {
     const formatedTitle = params.bookTitle?.replace(/_/g, " ");
@@ -109,9 +109,13 @@ export const loader = async ({ params }: LoaderArgs) => {
 };
 
 export default function AdminBookByTitleRoute() {
+  const navigation = useNavigation();
+  let isLoading =
+    navigation.state === "submitting" && navigation.formMethod === "PUT";
+  console.log("NAVIGATION ", navigation);
   const { book, chapters, images, genres, users } = useLoaderData();
   const [createChapter, setCreateChapter] = useState(false);
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [selectedCover, setSelectedCover] = useState("");
   const [selectedSecondaryImage, setSelectedSecondaryImage] = useState("");
@@ -128,9 +132,11 @@ export default function AdminBookByTitleRoute() {
     setIsEditing((prev) => !prev);
   };
 
-  const handleFormChange = (event: React.FormEvent) => {
-    console.log("TARGET ", event.currentTarget);
-  };
+  useEffect(() => {
+    if (navigation.state === "idle") {
+      setIsEditing(false);
+    }
+  }, [navigation.state]);
 
   return (
     <div className="grid grid-cols-2 gap-3">
@@ -162,8 +168,13 @@ export default function AdminBookByTitleRoute() {
             users={users}
           />
 
-          <Button type="submit" size="large" className="place-self-end">
-            Guardar
+          <Button
+            disabled={isLoading}
+            type="submit"
+            size="large"
+            className="place-self-end"
+          >
+            {isLoading ? "Guardando..." : "Guardar"}
           </Button>
         </Form>
       ) : (
