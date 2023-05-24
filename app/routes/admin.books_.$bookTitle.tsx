@@ -102,7 +102,7 @@ export default function AdminBookByTitleRoute() {
             <BookHero book={book} />
           </div>
 
-          <div className="col-span-1 grid gap-3">
+          <div className="col-span-1 flex flex-col gap-3">
             <button
               className="w-full py-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20"
               onClick={toggleCreateChapter}
@@ -111,7 +111,7 @@ export default function AdminBookByTitleRoute() {
             </button>
             {createChapter ? <ChapterForm bookId={book.id} /> : null}
             <List
-              height={330}
+              height={430}
               items={chapters.map(
                 (chapter: any) => chapter.order + " | " + chapter.title
               )}

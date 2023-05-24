@@ -22,7 +22,7 @@ export function List({
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        className={`flex flex-col gap-2 overflow-auto ${className}`}
+        className={`flex flex-col gap-2 overflow-auto custom-scrollbar ${className}`}
         style={{ height }}
       >
         {items.map((item) => (
