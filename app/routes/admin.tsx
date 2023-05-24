@@ -75,11 +75,11 @@ export default function AdminRoute() {
   ];
 
   return (
-    <div className="container">
-      <div className="flex gap-5">
-        <div className="flex-0">
+    <div className="container min-h-[95vh] py-3 box-content">
+      <div className="grid grid-cols-12 gap-5">
+        <div className="col-span-2">
           <nav aria-label="Admin navigation" role="navigation">
-            <ul className="flex flex-col gap-3 py-3">
+            <ul className="flex flex-col gap-3">
               {adminRoutes.map((route) => {
                 const isActive = location.pathname.includes(route.path);
                 return (
@@ -114,9 +114,9 @@ export default function AdminRoute() {
             </ul>
           </nav>
         </div>
-        <div className="flex-1 h-screen overflow-auto py-3 pr-5">
+        <main className="col-span-10">
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
   );

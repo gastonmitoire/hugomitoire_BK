@@ -63,9 +63,7 @@ export default function App() {
   return (
     <Document>
       {location.pathname.includes("admin") ? null : <TopBar user={user} />}
-      <main>
-        <Outlet />
-      </main>
+      <Outlet />
       {location.pathname.includes("admin") ? null : <Footer />}
     </Document>
   );

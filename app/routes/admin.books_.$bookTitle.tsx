@@ -111,7 +111,7 @@ export default function AdminBookByTitleRoute() {
             </button>
             {createChapter ? <ChapterForm bookId={book.id} /> : null}
             <List
-              height={370}
+              height={330}
               items={chapters.map(
                 (chapter: any) => chapter.order + " | " + chapter.title
               )}
