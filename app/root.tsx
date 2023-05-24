@@ -9,6 +9,7 @@ import {
   isRouteErrorResponse,
   Link,
   Outlet,
+  useLocation,
   useRouteError,
 } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
@@ -56,15 +57,16 @@ type AppProps = PropsWithChildren<{
 }>;
 
 export default function App() {
+  const location = useLocation();
   const { user } = useLoaderData() as AppProps;
 
   return (
     <Document>
-      <TopBar user={user} />
-      <main className="min-h-screen">
+      {location.pathname.includes("admin") ? null : <TopBar user={user} />}
+      <main>
         <Outlet />
       </main>
-      <Footer />
+      {location.pathname.includes("admin") ? null : <Footer />}
     </Document>
   );
 }

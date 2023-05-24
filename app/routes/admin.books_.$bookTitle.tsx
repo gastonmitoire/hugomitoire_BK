@@ -60,6 +60,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function AdminBookByTitleRoute() {
   const { book, chapters } = useLoaderData();
   const [createChapter, setCreateChapter] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleChapterClick = (item: string) => {
     console.log(item);
@@ -69,35 +70,56 @@ export default function AdminBookByTitleRoute() {
     setCreateChapter((prev) => !prev);
   };
 
+  const toggleIsEditing = () => {
+    setIsEditing((prev) => !prev);
+  };
+
   return (
     <div className="grid grid-cols-2 gap-3">
       <nav
         aria-label="Admin book menu"
         className="col-span-2 rounded-lg border-2 border-neutral-800"
       >
-        <ul className="flex items-center justify-between p-5"></ul>
+        <ul className="flex items-center justify-between p-1">
+          <li>
+            <Button
+              disableAnimation
+              type="button"
+              className="bg-neutral-900 hover:bg-neutral-800"
+              onClick={toggleIsEditing}
+            >
+              {isEditing ? "Cancelar" : "Editar"}
+            </Button>
+          </li>
+        </ul>
       </nav>
 
-      <div className="col-span-1">
-        <BookHero book={book} />
-      </div>
+      {isEditing ? (
+        <BookDetails book={book} />
+      ) : (
+        <>
+          <div className="col-span-1">
+            <BookHero book={book} />
+          </div>
 
-      <div className="col-span-1 grid gap-3">
-        <button
-          className="w-full py-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20"
-          onClick={toggleCreateChapter}
-        >
-          {createChapter ? "Cancelar" : "Crear capítulo"}
-        </button>
-        {createChapter ? <ChapterForm bookId={book.id} /> : null}
-        <List
-          height={370}
-          items={chapters.map(
-            (chapter: any) => chapter.order + " | " + chapter.title
-          )}
-          clickHandler={handleChapterClick}
-        />
-      </div>
+          <div className="col-span-1 grid gap-3">
+            <button
+              className="w-full py-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20"
+              onClick={toggleCreateChapter}
+            >
+              {createChapter ? "Cancelar" : "Crear capítulo"}
+            </button>
+            {createChapter ? <ChapterForm bookId={book.id} /> : null}
+            <List
+              height={370}
+              items={chapters.map(
+                (chapter: any) => chapter.order + " | " + chapter.title
+              )}
+              clickHandler={handleChapterClick}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -75,53 +75,47 @@ export default function AdminRoute() {
   ];
 
   return (
-    <div>
-      <div className="container">
-        <div className="flex">
-          <div className="flex-0">
-            <nav
-              aria-label="Admin navigation"
-              className="p-5"
-              role="navigation"
-            >
-              <ul className="flex flex-col gap-3">
-                {adminRoutes.map((route) => {
-                  const isActive = location.pathname.includes(route.path);
-                  return (
-                    <li
-                      key={route.path}
-                      className={`${
-                        isActive ? "font-bold" : ""
-                      } uppercase text-sm font-body`}
+    <div className="container">
+      <div className="flex gap-5">
+        <div className="flex-0">
+          <nav aria-label="Admin navigation" role="navigation">
+            <ul className="flex flex-col gap-3 py-3">
+              {adminRoutes.map((route) => {
+                const isActive = location.pathname.includes(route.path);
+                return (
+                  <li
+                    key={route.path}
+                    className={`${
+                      isActive ? "font-bold" : ""
+                    } uppercase text-sm font-body`}
+                  >
+                    <Link
+                      to={`/admin/${isActive ? "" : route.path}`}
+                      className="flex items-center justify-between p-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20"
                     >
-                      <Link
-                        to={`/admin/${isActive ? "" : route.path}`}
-                        className="flex items-center justify-between p-3 bg-neutral-700 bg-opacity-10 hover:bg-opacity-20"
-                      >
-                        {route.path}
-                      </Link>
+                      {route.path}
+                    </Link>
 
-                      {isActive && (
-                        <ul className="border-l-8 border-neutral-700 border-opacity-10">
-                          <li>
-                            <Link
-                              to={`/admin/${route.path}/new`}
-                              className="flex items-center justify-between p-1.5 bg-neutral-800 bg-opacity-5 hover:bg-opacity-10"
-                            >
-                              Nuevo
-                            </Link>
-                          </li>
-                        </ul>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-          </div>
-          <div className="flex-1 py-5">
-            <Outlet />
-          </div>
+                    {isActive && (
+                      <ul className="border-l-8 border-neutral-700 border-opacity-10">
+                        <li>
+                          <Link
+                            to={`/admin/${route.path}/new`}
+                            className="flex items-center justify-between p-1.5 bg-neutral-800 bg-opacity-5 hover:bg-opacity-10"
+                          >
+                            Nuevo
+                          </Link>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </div>
+        <div className="flex-1 h-screen overflow-auto py-3 pr-5">
+          <Outlet />
         </div>
       </div>
     </div>
