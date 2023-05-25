@@ -71,6 +71,8 @@ export default function AdminChapterById() {
               "No hay texto para este capítulo."
             )}
             <Button
+              aria-label={creating ? "Cancelar" : "Crear texto"}
+              type="button"
               color={creating ? "secondary" : "primary"}
               disableAnimation={creating}
               onClick={toggleCreating}
