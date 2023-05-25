@@ -1,6 +1,7 @@
-import React from "react";
+import { Editable, useEditor } from "@wysimark/react";
 
 import { Text } from "@prisma/client";
+import React from "react";
 
 interface TextFieldsProps {
   text?: Text;
@@ -8,18 +9,21 @@ interface TextFieldsProps {
 }
 
 export function TextFields({ text, chapterId }: TextFieldsProps) {
+  const editor = useEditor({
+    initialMarkdown: "# Hello World\n\nLorem ipsum dolar.",
+    height: 240,
+    authToken: "my-auth-token",
+  });
+
+  const showMarkdown = (event: React.MouseEvent) => {
+    event.preventDefault();
+    alert(editor.getMarkdown());
+  };
+
   return (
     <div className="grid gap-5">
-      <label>
-        <span className="block mb-2 text-sm font-medium text-neutral-300">
-          Texto
-        </span>
-        <textarea
-          className="block w-full p-3 text-lg text-neutral-700 bg-neutral-100 border border-neutral-200 rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
-          name="content"
-          defaultValue={text?.content || ""}
-        />
-      </label>
+      <Editable editor={editor} />
+      <button onClick={showMarkdown}>Show Markdown</button>
 
       <input type="hidden" name="chapterId" value={chapterId} />
     </div>
