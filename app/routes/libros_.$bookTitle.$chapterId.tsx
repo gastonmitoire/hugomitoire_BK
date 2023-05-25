@@ -1,6 +1,6 @@
 export default function () {
   return (
-    <div className="relative h-screen text-neutral-950 bg-neutral-200">
+    <div className="relative h-screen text-neutral-950 bg-neutral-800">
       <button
         className="absolute top-0 right-0 z-20 p-5"
         onClick={() => history.back()}
@@ -11,7 +11,7 @@ export default function () {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-6 h-6 stroke-neutral-300"
         >
           <path
             strokeLinecap="round"
@@ -20,7 +20,7 @@ export default function () {
           />
         </svg>
       </button>
-      <div className="container mx-auto h-[99%] w-3/5 p-20 shadow-lg overflow-auto custom-scrollbar bg-neutral-100">
+      <div className="container mx-auto h-[99%] w-3/5 py-10 px-20 shadow-lg overflow-auto custom-scrollbar bg-neutral-100">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora,
         laboriosam aliquam maiores rerum, repudiandae esse ullam eius suscipit
         harum vitae assumenda libero accusamus et, dignissimos voluptatum?
