@@ -5,6 +5,7 @@ import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
 
+import EditorJsRenderer from "~/components/editorjs_renderer";
 import { Button } from "~/components/button";
 import { Header } from "~/components/header";
 import { TextFields } from "~/components/text_fields";
@@ -49,12 +50,12 @@ export default function AdminChapterById() {
                 key={text.id}
                 className="flex flex-col items-center px-3 h-52 overflow-auto shadow shadow-neutral-800"
               >
-                <p className="py-3 text-lg text-neutral-700">{text.content}</p>
+                <EditorJsRenderer data={JSON.parse(text.content)} />
               </div>
             ))}
           </div>
         ) : (
-          <span className="flex flex-col place-items-center gap-3 py-5">
+          <span className="flex flex-col w-full gap-3 py-5">
             {creating ? (
               <Form
                 action={`/admin/texts/new`}
