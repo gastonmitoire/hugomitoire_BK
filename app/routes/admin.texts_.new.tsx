@@ -17,6 +17,8 @@ export const action = async ({ request, params }: ActionArgs) => {
   const content = form.get("content");
   const chapterId = form.get("chapterId");
 
+  console.log("content ", content);
+
   if (typeof content !== "string" || typeof chapterId !== "string") {
     return badRequest({
       fieldErrors: null,

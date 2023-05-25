@@ -67,7 +67,7 @@ export function ChapterList({ chapters }: ChapterListProps) {
                 <Link
                   to={`/libros/${chapter.book.title.replace(/ /g, "_")}/${
                     chapter.id
-                  }}`}
+                  }`}
                   className="group flex p-5 bg-neutral-900 bg-opacity-30"
                 >
                   <span className="flex-1 truncate">

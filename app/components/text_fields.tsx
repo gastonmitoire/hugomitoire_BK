@@ -9,21 +9,26 @@ interface TextFieldsProps {
 }
 
 export function TextFields({ text, chapterId }: TextFieldsProps) {
+  const [editable, setEditable] = React.useState(false);
+  const [content, setContent] = React.useState(
+    "# Hello World\n\nLorem ipsum dolar."
+  );
   const editor = useEditor({
-    initialMarkdown: "# Hello World\n\nLorem ipsum dolar.",
+    initialMarkdown: text?.content ?? content,
     height: 240,
     authToken: "my-auth-token",
   });
 
-  const showMarkdown = (event: React.MouseEvent) => {
-    event.preventDefault();
-    alert(editor.getMarkdown());
-  };
+  console.log("editor ", editor.getMarkdown());
 
   return (
     <div className="grid gap-5">
-      <Editable editor={editor} />
-      <button onClick={showMarkdown}>Show Markdown</button>
+      {editable ? (
+        <Editable editor={editor} />
+      ) : (
+        <div>{text?.content ?? content}</div>
+      )}
+      <input type="hidden" name="content" value={content} />
 
       <input type="hidden" name="chapterId" value={chapterId} />
     </div>

@@ -1,4 +1,42 @@
+import type { LoaderArgs, ActionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+
+import { db } from "~/utils/db.server";
+
+export const loader = async ({ params }: LoaderArgs) => {
+  const { bookTitle, chapterId } = params;
+  const chapters = await db.chapter.findMany({});
+  const chapter = await db.chapter.findUnique({
+    where: {
+      id: chapterId,
+    },
+    include: {
+      text: {
+        select: {
+          content: true,
+        },
+      },
+      book: {
+        select: {
+          title: true,
+        },
+      },
+    },
+  });
+
+  if (!chapter) {
+    return json({ content: "Chapter not found" }, { status: 404 });
+  }
+
+  return json({ chapter });
+};
+
 export default function () {
+  const { chapter } = useLoaderData();
+
+  console.log(chapter);
+
   return (
     <div className="relative h-screen text-neutral-950 bg-neutral-800">
       <button
@@ -20,42 +58,11 @@ export default function () {
           />
         </svg>
       </button>
-      <div className="container mx-auto h-[99%] w-3/5 py-10 px-20 shadow-lg overflow-auto custom-scrollbar bg-neutral-100">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora,
-        laboriosam aliquam maiores rerum, repudiandae esse ullam eius suscipit
-        harum vitae assumenda libero accusamus et, dignissimos voluptatum?
-        Ducimus fugit quod ipsa. Accusamus optio, saepe sapiente corrupti sit
-        aspernatur voluptatibus odio doloremque minus maiores est exercitationem
-        eum odit dignissimos repellendus repellat reiciendis impedit vitae quam,
-        ipsum asperiores fugit? Quaerat itaque sequi commodi? Sunt explicabo
-        obcaecati temporibus tempora voluptate facilis nam quidem aspernatur
-        ipsum necessitatibus. Veritatis amet molestiae quae dignissimos
-        cupiditate ut dicta, praesentium architecto ipsum quos temporibus harum
-        tempora quibusdam molestias sequi! Inventore, doloremque, eligendi modi
-        sunt ex similique rerum facere esse eius illo vero nihil aperiam,
-        excepturi sint quam amet itaque autem! Harum, quo laborum numquam
-        tempore delectus quaerat itaque iste! Nihil vitae amet harum numquam aut
-        veniam doloremque atque laborum? Illum ipsam tenetur, tempore
-        consequuntur nesciunt harum qui vel dicta commodi est nam quae. Magnam
-        quisquam voluptates dolorem molestiae hic.
-        <br />
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora,
-        laboriosam aliquam maiores rerum, repudiandae esse ullam eius suscipit
-        harum vitae assumenda libero accusamus et, dignissimos voluptatum?
-        Ducimus fugit quod ipsa. Accusamus optio, saepe sapiente corrupti sit
-        aspernatur voluptatibus odio doloremque minus maiores est exercitationem
-        eum odit dignissimos repellendus repellat reiciendis impedit vitae quam,
-        ipsum asperiores fugit? Quaerat itaque sequi commodi? Sunt explicabo
-        obcaecati temporibus tempora voluptate facilis nam quidem aspernatur
-        ipsum necessitatibus. Veritatis amet molestiae quae dignissimos
-        cupiditate ut dicta, praesentium architecto ipsum quos temporibus harum
-        tempora quibusdam molestias sequi! Inventore, doloremque, eligendi modi
-        sunt ex similique rerum facere esse eius illo vero nihil aperiam,
-        excepturi sint quam amet itaque autem! Harum, quo laborum numquam
-        tempore delectus quaerat itaque iste! Nihil vitae amet harum numquam aut
-        veniam doloremque atque laborum? Illum ipsam tenetur, tempore
-        consequuntur nesciunt harum qui vel dicta commodi est nam quae. Magnam
-        quisquam voluptates dolorem molestiae hic.
+      <div className="container mx-auto h-[99%] w-3/5 py-10 px-20 shadow-lg overflow-auto custom-scrollbar font-bellefair text-2xl bg-neutral-100">
+        <h1 className="text-4xl font-bold text-center py-10">
+          {chapter.title} - {chapter.book.title}
+        </h1>
+        <div dangerouslySetInnerHTML={{ __html: chapter.text[0].content }} />
       </div>
     </div>
   );
