@@ -40,7 +40,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
     };
   }, []);
 
-  return <div id={holder} className="bg-red-500 w-full" />;
+  return <div id={holder} className="max-w-prose bg-neutral-300" />;
 };
 
 export default memo(EditorBlock);
