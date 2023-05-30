@@ -45,14 +45,32 @@ export default function AdminChapterById() {
       <div className="flex flex-col items-center justify-center w-full h-full">
         {chapter.text.length > 0 ? (
           <div className="grid grid-cols-3 gap-5 py-5">
-            {chapter.text.map((text) => (
-              <div
-                key={text.id}
-                className="flex flex-col items-center px-3 h-52 overflow-auto shadow shadow-neutral-800"
-              >
-                <EditorJsRenderer data={JSON.parse(text.content)} />
-              </div>
-            ))}
+            {chapter.text.map((text) => {
+              function isJsonString(str: string) {
+                try {
+                  JSON.parse(str);
+                } catch (e) {
+                  return false;
+                }
+                return true;
+              }
+
+              return isJsonString(text.content) ? (
+                <div
+                  key={text.id}
+                  className="flex flex-col items-center px-3 h-52 overflow-auto shadow shadow-neutral-800"
+                >
+                  <EditorJsRenderer data={JSON.parse(text.content)} />
+                </div>
+              ) : (
+                <div
+                  key={text.id}
+                  className="flex flex-col items-center px-3 h-52 overflow-auto shadow shadow-neutral-800"
+                >
+                  <p className="text-justify">{text.content}</p>
+                </div>
+              );
+            })}
           </div>
         ) : (
           <span className="flex flex-col w-full gap-3 py-5">

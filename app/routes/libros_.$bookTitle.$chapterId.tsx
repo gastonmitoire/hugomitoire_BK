@@ -4,6 +4,8 @@ import { useLoaderData } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
 
+import EditorJsRenderer from "~/components/editorjs_renderer";
+
 export const loader = async ({ params }: LoaderArgs) => {
   const { bookTitle, chapterId } = params;
   const chapters = await db.chapter.findMany({});
@@ -62,7 +64,12 @@ export default function () {
         <h1 className="text-4xl font-bold text-center py-10">
           {chapter.title} - {chapter.book.title}
         </h1>
-        <div dangerouslySetInnerHTML={{ __html: chapter.text[0].content }} />
+        {/* {chapter.text.length > 0 &&
+          chapter.text.map((text: any) => (
+            <div key={text.id} className="py-5">
+              <EditorJsRenderer data={JSON.parse(text.content)} />
+            </div>
+          ))} */}
       </div>
     </div>
   );
