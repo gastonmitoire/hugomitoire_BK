@@ -1,12 +1,7 @@
 import { useState, useEffect } from "react";
 import type { LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import {
-  Form,
-  useLoaderData,
-  useNavigation,
-  useNavigate,
-} from "@remix-run/react";
+import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
 
@@ -115,7 +110,6 @@ export const loader = async ({ params }: LoaderArgs) => {
 
 export default function AdminBookByTitleRoute() {
   const navigation = useNavigation();
-  const navigate = useNavigate();
   let isLoading =
     navigation.state === "submitting" && navigation.formMethod === "PUT";
   console.log("NAVIGATION ", navigation);
@@ -126,12 +120,8 @@ export default function AdminBookByTitleRoute() {
   const [selectedCover, setSelectedCover] = useState("");
   const [selectedSecondaryImage, setSelectedSecondaryImage] = useState("");
 
-  const handleChapterClick = (item: {
-    id: string;
-    title: string;
-    order: string;
-  }) => {
-    navigate(`/admin/chapters/${item.id}`);
+  const handleChapterClick = (item: string) => {
+    console.log(item);
   };
 
   const toggleCreateChapter = () => {
@@ -204,11 +194,7 @@ export default function AdminBookByTitleRoute() {
             <List
               height={430}
               items={chapters.map(
-                (item: { id: string; title: string; order: string }) => ({
-                  id: item.id,
-                  title: item.title,
-                  order: item.order,
-                })
+                (chapter: any) => chapter.order + " | " + chapter.title
               )}
               clickHandler={handleChapterClick}
             />

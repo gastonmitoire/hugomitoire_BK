@@ -10,15 +10,10 @@ import {
   useRouteError,
 } from "@remix-run/react";
 
-import { Chapter, Text, Book } from "@prisma/client";
-
-interface ExtendedChapter extends Chapter {
-  book: Book;
-  text: Text[];
-}
+import { Chapter } from "@prisma/client";
 
 interface ChapterListProps {
-  chapters: ExtendedChapter[];
+  chapters: Chapter[];
 }
 
 const container = {
@@ -38,7 +33,7 @@ const item = {
 export function ChapterList({ chapters }: ChapterListProps) {
   const columnCount = 7;
 
-  const columnGroups: ExtendedChapter[][] = Array.from(
+  const columnGroups: Chapter[][] = Array.from(
     { length: Math.ceil(chapters.length / columnCount) },
     (_, index) => chapters.slice(index * columnCount, (index + 1) * columnCount)
   );
@@ -65,33 +60,12 @@ export function ChapterList({ chapters }: ChapterListProps) {
                 variants={item}
               >
                 <Link
-                  to={`/libros/${chapter.book.title.replace(/ /g, "_")}/${
-                    chapter.id
+                  to={`/libros/${chapter.title.replace(/ /g, "_")}/${
+                    chapter.order
                   }`}
-                  className="group flex p-5 bg-neutral-900 bg-opacity-30"
+                  className="block p-5 bg-neutral-900 bg-opacity-30"
                 >
-                  <span className="flex-1 truncate">
-                    {groupIndex * columnCount + columnIndex + 1} -{" "}
-                    {chapter.title}
-                  </span>
-                  <span className="">
-                    {chapter.text.length > 0 ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6 group-hover:stroke-primary"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                        />
-                      </svg>
-                    ) : null}
-                  </span>
+                  {groupIndex * columnCount + columnIndex + 1} - {chapter.title}
                 </Link>
               </motion.span>
             </AnimatePresence>

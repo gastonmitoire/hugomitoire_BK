@@ -2,15 +2,11 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ListProps {
-  items: {
-    id: string;
-    title: string;
-    order?: number;
-  }[];
+  items: string[];
   height?: number;
   className?: string;
-  clickHandler?: (item: any) => void;
-  deleteHandler?: (item: any) => void;
+  clickHandler?: (item: string) => void;
+  deleteHandler?: (item: string) => void;
 }
 
 export function List({
@@ -29,9 +25,9 @@ export function List({
         className={`flex flex-col gap-2 overflow-auto custom-scrollbar ${className}`}
         style={{ height }}
       >
-        {items.map((item, index) => (
+        {items.map((item) => (
           <motion.li
-            key={index}
+            key={item}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -44,7 +40,7 @@ export function List({
               }`}
               onClick={() => clickHandler && clickHandler(item)}
             >
-              {item.order + ". " + item.title}
+              {item}
             </span>
             {deleteHandler && (
               <button

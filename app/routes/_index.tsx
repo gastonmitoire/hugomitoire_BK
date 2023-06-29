@@ -62,38 +62,18 @@ export default function Index() {
         )}
       </div>
 
-      <Header title="Capitulos" transparent colorClass="text-neutral-300" dense>
-        <h5 className="pt-3 font-bold tracking-widest font-cinzel">
-          Fragmentos
-        </h5>
-      </Header>
-      <Header title="Libros" transparent colorClass="text-neutral-300" dense>
-        <h5 className="pt-3 font-bold tracking-widest font-cinzel">
-          Destacados
-        </h5>
-      </Header>
-      <section className="container">
-        <SliderGallery
-          items={[books.map((book) => book.cover)]}
-          imageWidth={"auto"}
-          imageHeight={297.5}
-          hidePagination
-        />
-      </section>
-      <Header transparent colorClass="text-neutral-300" dense>
-        <h5 className="pt-3 font-bold tracking-widest font-cinzel">
-          Serie terror
-        </h5>
-      </Header>
-      <section className="container">
-        <SliderGallery
-          items={[books.map((book) => book.cover)]}
-          imageWidth={"auto"}
-          imageHeight={458.25}
-          objectFit="cover"
-          hidePagination
-        />
-      </section>
+      <Header title="Libros" transparent colorClass="text-neutral-300" />
+      <div className="container flex flex-col gap-y-3 py-3">
+        <section>
+          <h5 className="pb-3 font-bold tracking-widest">Destacados</h5>
+          <SliderGallery
+            items={[books.map((book) => book.cover)]}
+            imageWidth={"auto"}
+            imageHeight={458.25}
+            hidePagination
+          />
+        </section>
+      </div>
     </div>
   );
 }

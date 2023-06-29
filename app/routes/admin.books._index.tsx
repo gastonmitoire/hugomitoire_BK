@@ -27,8 +27,8 @@ export default function AdminBooksRoute() {
   const navigate = useNavigate();
   const { books } = useLoaderData();
 
-  const handleListClick = (item: any) => {
-    navigate(`/admin/books/${item.title.replace(/ /g, "_")}`);
+  const handleListClick = (item: string) => {
+    navigate(`/admin/books/${item.replace(/ /g, "_")}`);
   };
 
   const handleDelete = async (item: string) => {
@@ -46,16 +46,7 @@ export default function AdminBooksRoute() {
         <h1 className="text-2xl font-bold">Libros</h1>
 
         <List
-          items={books.map(
-            (
-              item: { id: string; title: string; order: string },
-              index: number
-            ) => ({
-              id: item.id,
-              title: item.title,
-              order: index + 1,
-            })
-          )}
+          items={books.map((book: any) => book.title)}
           height={370}
           className="overflow-y-auto py-3"
           clickHandler={handleListClick}
