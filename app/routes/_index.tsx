@@ -2,14 +2,10 @@ import type { V2_MetaFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { Book } from ".prisma/client";
 import { db } from "~/utils/db.server";
-import { BookCard } from "../components/book_card";
-import Hero, { ItemProps } from "~/components/hero";
+import Hero from "~/components/hero";
 import { Button } from "~/components/button";
-import { Header } from "~/components/header";
 import { Slider } from "~/components/slider";
-import { SliderGallery } from "~/components/slider_gallery";
 
 export const meta: V2_MetaFunction = () => {
   return [{ title: "New Remix App" }];
@@ -29,17 +25,16 @@ export default function Index() {
     console.log("Current index:", index);
   }
 
-  function renderHero(book: Book) {
+  function renderHero(index: number) {
+    const book = books[index];
     return (
       <Hero
         key={book.id}
-        item={
-          {
-            title: book.title,
-            subtitle: book.type,
-            image: book.secondaryImage,
-          } as ItemProps
-        }
+        item={{
+          title: book.title,
+          subtitle: book.type,
+          image: book.secondaryImage,
+        }}
         className="h-[80vh]"
         actions={
           <div className="flex space-x-4">
@@ -57,7 +52,7 @@ export default function Index() {
       <div className="h-[90vh]">
         {books.length > 0 ? (
           <Slider
-            items={books}
+            length={books.length}
             onChange={handleChange}
             renderItem={renderHero}
             autoPlay

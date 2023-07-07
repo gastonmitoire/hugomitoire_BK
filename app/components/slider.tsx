@@ -5,28 +5,27 @@ import { PaginationArrows } from "./pagination_arrows";
 import { PaginationDots } from "./pagination_dots";
 import { ProgressBar } from "./progress_bar";
 
-type SliderProps<T> = {
-  items: T[];
+type SliderProps = {
+  length: number;
   onChange: (index: number) => void;
-  renderItem: (item: T) => React.ReactNode;
+  renderItem: (index: number) => React.ReactNode;
   autoPlay?: boolean;
   hideProgressBar?: boolean;
   hidePagination?: boolean;
   hideArrows?: boolean;
 };
 
-export function Slider<T>({
-  items,
+export function Slider({
+  length,
   onChange,
   renderItem,
   autoPlay,
   hideProgressBar,
   hidePagination,
   hideArrows,
-}: SliderProps<T>) {
+}: SliderProps) {
   const [reset, setReset] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const length = items.length;
 
   const handleAutoPlay = useCallback(() => {
     const newIndex = currentIndex === length - 1 ? 0 : currentIndex + 1;
@@ -81,7 +80,7 @@ export function Slider<T>({
           exit={{ opacity: 0 }}
           className="md:absolute inset-0 flex items-center justify-center"
         >
-          {renderItem(JSON.parse(JSON.stringify(items[currentIndex])) as T)}
+          {renderItem(currentIndex)}
         </motion.div>
       </AnimatePresence>
 
