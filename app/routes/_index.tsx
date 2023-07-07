@@ -3,7 +3,7 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
-import Hero from "~/components/hero";
+import { Hero } from "~/components/hero";
 import { Button } from "~/components/button";
 import { Slider } from "~/components/slider";
 

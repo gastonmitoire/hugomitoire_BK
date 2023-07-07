@@ -31,7 +31,7 @@ const itemAnimation = {
   show: { opacity: 1, x: 0 },
 };
 
-function Hero({ item, actions, className }: HeroProps) {
+export function Hero({ item, actions, className }: HeroProps) {
   const { title, image, subtitle } = item;
 
   return (
@@ -80,5 +80,3 @@ function Hero({ item, actions, className }: HeroProps) {
     </div>
   );
 }
-
-export default Hero;

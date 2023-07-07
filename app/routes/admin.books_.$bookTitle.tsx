@@ -6,7 +6,7 @@ import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 import { BookFields } from "~/components/book_fields";
-import { BookHero } from "~/components/hero";
+import { Hero } from "~/components/hero";
 import { Button } from "~/components/button";
 import { ChapterForm } from "~/components/chapter_form";
 import { List } from "~/components/list";
@@ -180,7 +180,13 @@ export default function AdminBookByTitleRoute() {
       ) : (
         <>
           <div className="col-span-1">
-            <BookHero book={book} />
+            <Hero
+              item={{
+                title: book.title,
+                subtitle: book.genre.name,
+                image: book.cover,
+              }}
+            />
           </div>
 
           <div className="col-span-1 flex flex-col gap-3">

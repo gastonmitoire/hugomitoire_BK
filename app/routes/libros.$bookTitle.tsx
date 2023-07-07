@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { db } from "~/utils/db.server";
 
 import { BookDetails } from "~/components/book_details";
-import { BookHero } from "~/components/hero";
+import { Hero } from "~/components/hero";
 import { ChapterList } from "~/components/chapter_list";
 import { Header } from "~/components/header";
 
@@ -48,7 +48,14 @@ export default function LibroRoute() {
 
   return (
     <div className="min-h-[90vh]">
-      <BookHero book={book} genre={book.genre} className="h-[80vh]" />
+      <Hero
+        item={{
+          title: book.title,
+          subtitle: book.type,
+          image: book.secondaryImage,
+        }}
+        className="h-[80vh]"
+      />
 
       <div className="relative">
         <nav
