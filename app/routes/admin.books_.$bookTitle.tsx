@@ -6,7 +6,7 @@ import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 import { BookFields } from "~/components/book_fields";
-import { BookHero } from "~/components/book_hero";
+import { BookHero } from "~/components/hero";
 import { Button } from "~/components/button";
 import { ChapterForm } from "~/components/chapter_form";
 import { List } from "~/components/list";

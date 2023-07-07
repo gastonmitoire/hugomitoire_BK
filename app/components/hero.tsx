@@ -3,6 +3,19 @@ import { motion } from "framer-motion";
 
 import { Book as BookProps, Genre as GenreProps } from "@prisma/client";
 
+export interface ItemProps {
+  image: string;
+  title: string;
+  subtitle: string;
+}
+
+interface HeroProps {
+  item: ItemProps;
+  actions?: React.ReactNode;
+  className?: string;
+}
+
+// Framer Motion config
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -13,20 +26,13 @@ const container = {
   },
 };
 
-const item = {
+const itemAnimation = {
   hidden: { opacity: 0, x: -100 },
   show: { opacity: 1, x: 0 },
 };
 
-interface BookHeroProps {
-  book: BookProps;
-  genre?: GenreProps;
-  actions?: React.ReactNode;
-  className?: string;
-}
-
-export function BookHero({ book, genre, actions, className }: BookHeroProps) {
-  const { title, type, secondaryImage } = book;
+function Hero({ item, actions, className }: HeroProps) {
+  const { title, image, subtitle } = item;
 
   return (
     <div className={`h-[90vh] w-full ${className}`}>
@@ -40,7 +46,7 @@ export function BookHero({ book, genre, actions, className }: BookHeroProps) {
         transition={{ duration: 0.7 }}
         className="w-full h-4/5 mb-16"
         style={{
-          background: `url(${secondaryImage})`,
+          background: `url(${image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -58,16 +64,14 @@ export function BookHero({ book, genre, actions, className }: BookHeroProps) {
             animate="show"
             className="container flex flex-col items-start justify-end w-full h-full space-y-4"
           >
-            <motion.div variants={item}>
+            <motion.div variants={itemAnimation}>
               <h1 className="text-5xl font-bold">{title}</h1>
             </motion.div>
             <motion.div
-              variants={item}
+              variants={itemAnimation}
               className="flex items-start lg:items-center gap-5 font-body text-sm text-neutral-400 uppercase tracking-wide"
             >
-              <p>{type}</p>
-              <p>{genre?.name}</p>
-              <p>{genre?.ageRange}</p>
+              <p>{subtitle}</p>
             </motion.div>
             {actions && actions}
           </motion.div>
@@ -76,3 +80,5 @@ export function BookHero({ book, genre, actions, className }: BookHeroProps) {
     </div>
   );
 }
+
+export default Hero;

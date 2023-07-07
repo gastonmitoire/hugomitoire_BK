@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { db } from "~/utils/db.server";
 
 import { BookDetails } from "~/components/book_details";
-import { BookHero } from "~/components/book_hero";
+import { BookHero } from "~/components/hero";
 import { ChapterList } from "~/components/chapter_list";
 import { Header } from "~/components/header";
 

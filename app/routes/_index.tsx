@@ -5,7 +5,7 @@ import { useLoaderData } from "@remix-run/react";
 import { Book } from ".prisma/client";
 import { db } from "~/utils/db.server";
 import { BookCard } from "../components/book_card";
-import { BookHero } from "~/components/book_hero";
+import Hero, { ItemProps } from "~/components/hero";
 import { Button } from "~/components/button";
 import { Header } from "~/components/header";
 import { Slider } from "~/components/slider";
@@ -31,9 +31,15 @@ export default function Index() {
 
   function renderHero(book: Book) {
     return (
-      <BookHero
+      <Hero
         key={book.id}
-        book={book}
+        item={
+          {
+            title: book.title,
+            subtitle: book.type,
+            image: book.secondaryImage,
+          } as ItemProps
+        }
         className="h-[80vh]"
         actions={
           <div className="flex space-x-4">
@@ -60,19 +66,6 @@ export default function Index() {
         ) : (
           "No books found"
         )}
-      </div>
-
-      <Header title="Libros" transparent colorClass="text-neutral-300" />
-      <div className="container flex flex-col gap-y-3 py-3">
-        <section>
-          <h5 className="pb-3 font-bold tracking-widest">Destacados</h5>
-          <SliderGallery
-            items={[books.map((book) => book.cover)]}
-            imageWidth={"auto"}
-            imageHeight={458.25}
-            hidePagination
-          />
-        </section>
       </div>
     </div>
   );
