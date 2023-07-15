@@ -43,8 +43,6 @@ export default function AdminBooksRoute() {
   return (
     <div className="grid grid-cols-1">
       <div className="col-span-1">
-        <h1 className="text-2xl font-bold">Libros</h1>
-
         <List
           items={books.map((book: any) => book.title)}
           height={370}
