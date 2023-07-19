@@ -2,8 +2,15 @@ import React from "react";
 import { Book as BookProps } from "@prisma/client";
 
 interface BookDetailsProps {
-  book: BookProps;
+  book: BookProps & {
+    illustrator?: string;
+    publisher: {
+      username: string;
+    };
+  };
 }
+
+// extend the BookDetailsProps interface with illustrator and publisher
 
 export function BookDetails({ book }: BookDetailsProps) {
   return (
@@ -20,13 +27,15 @@ export function BookDetails({ book }: BookDetailsProps) {
           <h3 className="text-2xl font-bold">Fecha de publicación</h3>
           <p className="text-neutral-400">{book.publicationDate.toString()}</p>
         </span>
-        <span>
-          <h3 className="text-2xl font-bold">Ilustrador</h3>
-          <p className="text-neutral-400">Maco Pacheco</p>
-        </span>
+        {book.illustrator && (
+          <span>
+            <h3 className="text-2xl font-bold">Ilustrador</h3>
+            <p className="text-neutral-400">{book.illustrator}</p>
+          </span>
+        )}
         <span>
           <h3 className="text-2xl font-bold">Editorial</h3>
-          <p className="text-neutral-400">Ediciones de La Paz</p>
+          <p className="text-neutral-400">{book.publisher.username}</p>
         </span>
       </div>
     </div>

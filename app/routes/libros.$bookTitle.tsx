@@ -18,6 +18,12 @@ export const loader = async ({ params }: LoaderArgs) => {
     include: {
       genre: true,
       comments: true,
+      illustrator: {
+        select: { username: true },
+      },
+      publisher: {
+        select: { username: true },
+      },
     },
   });
 
