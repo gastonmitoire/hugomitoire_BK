@@ -15,6 +15,7 @@ interface TopBarProps {
       image?: string;
       displayName?: string;
     };
+    role: string;
   };
 }
 
@@ -27,10 +28,10 @@ export function TopBar({ user }: TopBarProps) {
     >
       <span className="container mx-auto flex items-center justify-between w-full h-16 px-3 md:p-0">
         <div className="flex-1">
-          <Drawer buttonClassName="lg:hidden">
+          <Drawer buttonClassName="lg:hidden xl:hidden 2xl:hidden">
             <Navigation isvertical />
           </Drawer>
-          <Navigation className="hidden lg:flex" />
+          <Navigation className="hidden lg:flex xl:flex 2xl:flex" />
         </div>
         <div className="flex-0 flex items-center">
           <a
@@ -40,7 +41,7 @@ export function TopBar({ user }: TopBarProps) {
             Hugo Mitoire
           </a>
         </div>
-        <div className="md:flex-1 flex justify-end items-center">
+        <div className="sm:flex-0 flex-1 flex justify-end items-center">
           <UserMenu user={user} />
         </div>
       </span>
