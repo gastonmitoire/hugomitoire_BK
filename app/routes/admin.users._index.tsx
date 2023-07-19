@@ -17,8 +17,6 @@ export const loader = async ({ params }: LoaderArgs) => {
   const editUserId = params.editUserId;
   const users = await db.user.findMany({});
 
-  console.log("param", editUserId);
-
   if (!!params.editUserId) {
     const editUser = await db.user.findUnique({
       where: {

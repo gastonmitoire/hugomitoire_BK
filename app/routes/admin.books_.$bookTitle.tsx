@@ -31,9 +31,9 @@ export const action = async ({ request, params }: LoaderArgs) => {
     const genre = body.get("genre");
     const cover = body.get("cover");
     const secondaryImage = body.get("secondaryImage");
-    const illustratorId = body.get("illustratorId");
     const publisherId = body.get("publisherId");
 
+    console.log("BODY ", body);
     if (
       typeof title !== "string" ||
       typeof description !== "string" ||
@@ -41,7 +41,6 @@ export const action = async ({ request, params }: LoaderArgs) => {
       typeof genre !== "string" ||
       typeof cover !== "string" ||
       typeof secondaryImage !== "string" ||
-      typeof illustratorId !== "string" ||
       typeof publisherId !== "string"
     ) {
       return json({ message: "Invalid body" }, { status: 400 });
@@ -56,7 +55,6 @@ export const action = async ({ request, params }: LoaderArgs) => {
         genreId: genre!,
         cover,
         secondaryImage,
-        illustratorId,
         publisherId,
       },
     });

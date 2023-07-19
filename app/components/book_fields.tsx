@@ -162,6 +162,9 @@ export function BookFields({ book, images, genres, users }: BookFieldsProps) {
             className="w-full p-3 bg-neutral-700 bg-opacity-10"
             defaultValue={book?.illustratorId || ""}
           >
+            <option value="" className="w-full p-3 bg-neutral-700">
+              {" "}
+            </option>
             {users?.map((user) => (
               <option
                 key={user.id}

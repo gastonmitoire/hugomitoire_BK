@@ -80,8 +80,6 @@ export const action = async ({ request, params }: ActionArgs) => {
     },
   });
 
-  console.log("RES ", user);
-
   return redirect(`/admin/users/${user.id}`);
 };
 

@@ -52,20 +52,7 @@ export const action = async ({ request }: ActionArgs) => {
   const cover = form.get("cover");
   const secondaryImage = form.get("secondaryImage");
   const genreId = form.get("genreId");
-  const illustratorId = form.get("illustratorId");
   const publisherId = form.get("publisherId");
-
-  console.log("FORM", {
-    title,
-    description,
-    type,
-    publicationDate,
-    cover,
-    secondaryImage,
-    genreId,
-    illustratorId,
-    publisherId,
-  });
 
   if (
     typeof title !== "string" ||
@@ -75,7 +62,6 @@ export const action = async ({ request }: ActionArgs) => {
     typeof cover !== "string" ||
     typeof secondaryImage !== "string" ||
     typeof genreId !== "string" ||
-    typeof illustratorId !== "string" ||
     typeof publisherId !== "string"
   ) {
     return badRequest({
@@ -103,7 +89,6 @@ export const action = async ({ request }: ActionArgs) => {
     cover,
     secondaryImage,
     genreId,
-    illustratorId,
     publisherId,
   };
 
@@ -243,6 +228,7 @@ export default function AdminBooksNewRoute() {
                 id="illustrator"
                 defaultValue={actionData?.fields?.illustrator}
               >
+                <option value=""></option>
                 {users.map((user) => (
                   <option key={user.id} value={user.id}>
                     {user.username}

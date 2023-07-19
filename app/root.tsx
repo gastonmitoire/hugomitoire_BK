@@ -39,7 +39,6 @@ export const meta: V2_MetaFunction = () => {
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
 
-  console.log("user", user);
   return json({ user });
 };
 
