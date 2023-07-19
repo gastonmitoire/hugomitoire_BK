@@ -7,6 +7,7 @@ export interface ItemProps {
   image: string;
   title: string;
   subtitle: string;
+  cover: string;
 }
 
 interface HeroProps {
@@ -62,17 +63,27 @@ export function Hero({ item, actions, className }: HeroProps) {
             variants={container}
             initial="hidden"
             animate="show"
-            className="container flex flex-col items-start justify-end w-full h-full space-y-4"
+            className="relative px-[3rem] mx-auto flex flex-col items-start justify-end w-full h-full space-y-4"
           >
-            <motion.div variants={itemAnimation}>
-              <h1 className="text-5xl font-bold">{title}</h1>
-            </motion.div>
-            <motion.div
-              variants={itemAnimation}
-              className="flex items-start lg:items-center gap-5 font-body text-sm text-neutral-400 uppercase tracking-wide"
-            >
-              <p>{subtitle}</p>
-            </motion.div>
+            <div className="w-full">
+              <motion.img
+                src={item.cover}
+                className="w-64 2xl:w-80"
+                variants={itemAnimation}
+                alt={`tapa-${title}`}
+              />
+            </div>
+            <div className="flex flex-col items-start justify-end">
+              <motion.div variants={itemAnimation}>
+                <h1 className="text-5xl font-bold">{title}</h1>
+              </motion.div>
+              <motion.div
+                variants={itemAnimation}
+                className="flex items-start 2xl:items-center gap-5 font-body text-sm text-neutral-400 uppercase tracking-wide"
+              >
+                <p>{subtitle}</p>
+              </motion.div>
+            </div>
             {actions && actions}
           </motion.div>
         </div>

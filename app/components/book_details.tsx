@@ -14,10 +14,7 @@ interface BookDetailsProps {
 
 export function BookDetails({ book }: BookDetailsProps) {
   return (
-    <div className="flex flex-col lg:flex-row h-full container py-8">
-      <div className="lg:flex-1 p-8 bg-neutral-900">
-        <img src={book.cover} alt="" className="mx-auto w-64" />
-      </div>
+    <div className="flex flex-col lg:flex-row xl:flex-row 2xl:flex-row h-full container py-8">
       <div className="p-8 bg-neutral-900" style={{ flex: "2 1 0%" }}>
         <h1 className="text-4xl font-bold pb-5">Sinopsis</h1>
         <p className="text-xl font-bellefair">{book.description}</p>

@@ -33,6 +33,7 @@ export default function Index() {
           title: book.title,
           subtitle: book.type,
           image: book.secondaryImage,
+          cover: book.cover,
         }}
         className="h-[80vh]"
         actions={
