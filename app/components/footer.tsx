@@ -7,15 +7,15 @@ export function Footer() {
   return (
     <footer className="w-full font-body">
       <div className="flex items-center h-full py-3 bg-neutral-900 lg:h-12 lg:py-0">
-        <div className="container flex flex-col lg:flex-row justify-between items-center gap-3">
+        <div className="container mx-auto flex flex-col lg:flex-row xl:flex-row 2xl:flex-row justify-between items-center gap-3">
           <p>&copy; 2023 Hugo Mitoire. Todos los derechos reservados.</p>
           <SocialLinks />
         </div>
       </div>
-      <div className="h-10 flex flex-col lg:flex-row items-center py-3 bg-neutral-950 lg:py-0">
+      <div className="h-10 flex flex-col lg:flex-row xl:flex-row 2xl:flex-row items-center py-3 bg-neutral-950 lg:py-0">
         <nav
           aria-label="Footer navigation"
-          className="container flex flex-col lg:flex-row justify-between items-center gap-3"
+          className="container mx-auto flex flex-col lg:flex-row xl:flex-row 2xl:flex-row justify-between items-center gap-3"
         >
           <Navigation link className="capitalize gap-3" />
           <ul className="flex items-center space-x-4 text-neutral-400">
