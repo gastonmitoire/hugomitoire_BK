@@ -65,7 +65,7 @@ export function Slider({
   }, [autoPlay, handleAutoPlay]);
 
   return (
-    <div className="relative w-full md:h-full select-none overflow-x-hidden">
+    <div className="relative w-full h-full select-none overflow-x-hidden">
       {!hideProgressBar && (
         <div className="flex h-full w-full">
           <ProgressBar timeout={15000} reset={reset} />
