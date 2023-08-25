@@ -90,14 +90,20 @@ export const Swiper: React.FC<SwiperProps> = ({ slides }) => {
     if (swiperRef.current) {
       const swiper = swiperRef.current;
       const slideWidth = swiper.offsetWidth;
-      const newPosition = scrollPosition - slideWidth;
-      if (newPosition >= 0) {
-        swiper.scrollTo({
-          left: newPosition,
-          behavior: "smooth",
-        });
-        setScrollPosition(newPosition);
-      }
+      const newPosition = scrollPosition - slideWidth; // Cambia el signo aquí a negativo
+      swiper.scrollTo({
+        left: newPosition,
+        behavior: "smooth",
+      });
+      setScrollPosition(newPosition);
+    }
+  };
+
+  const handleScroll = () => {
+    if (swiperRef.current) {
+      const swiper = swiperRef.current;
+      const newPosition = swiper.scrollLeft;
+      setScrollPosition(newPosition);
     }
   };
 
@@ -107,6 +113,7 @@ export const Swiper: React.FC<SwiperProps> = ({ slides }) => {
         ref={swiperRef}
         className="w-full h-min m-auto whitespace-nowrap snap-x snap-mandatory overflow-x-scroll overflow-y-hidden scrollbar-hide"
         style={{ overflowX: "scroll", whiteSpace: "nowrap" }} // Agrega estos estilos
+        onScroll={handleScroll} // Agrega el evento onScroll
       >
         {slides.map((slide, index) => {
           return (
