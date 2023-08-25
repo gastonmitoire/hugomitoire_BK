@@ -7,61 +7,58 @@ interface SwiperProps {
 const NavigationButton: React.FC<{
   direction: "left" | "right";
   onClick: () => void;
-}> = ({ direction, onClick }) => {
+  isDisabled: boolean;
+}> = ({ direction, onClick, isDisabled }) => {
   const icon =
     direction === "left" ? (
       <svg
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className="h-10 w-10 text-gray-300 cursor-pointer"
-        viewBox="0 0 20 20"
-        fill="currentColor"
+        className="h-10 w-10 text-gray-300"
       >
-        <svg
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.5}
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <path
+          d="M15.75 19.5L8.25 12l7.5-7.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ) : (
       <svg
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className="h-10 w-10 text-gray-300 cursor-pointer"
-        viewBox="0 0 20 20"
-        fill="currentColor"
+        className="h-10 w-10 text-gray-300"
       >
-        <svg
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.5}
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8.25 19.5L15.75 12l-7.5-7.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <path
+          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     );
 
   return (
     <button
-      className={`absolute top-0 ${
+      className={`absolute top-0 h-full flex justify-center items-center transition-all ${
         direction === "left"
-          ? "left-0 bg-gradient-to-tr from-black via-transparent hover:via-black hover:to-transparent transition-all ease-in-out"
-          : "right-0 bg-gradient-to-tl from-black via-transparent hover:via-black hover:to-transparent transition-all ease-in-out"
-      } h-full flex justify-center items-center`}
+          ? `left-0 bg-gradient-to-tr from-black via-transparent ${
+              isDisabled
+                ? "cursor-not-allowed opacity-50"
+                : "cursor-pointer hover:via-black hover:to-transparent ease-in-out"
+            }`
+          : `right-0 bg-gradient-to-tl from-black via-transparent ${
+              isDisabled
+                ? "cursor-not-allowed opacity-50"
+                : "cursor-pointer hover:via-black hover:to-transparent ease-in-out"
+            }`
+      }`}
       onClick={onClick}
     >
       {icon}
@@ -72,6 +69,12 @@ const NavigationButton: React.FC<{
 export const Swiper: React.FC<SwiperProps> = ({ slides }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const swiperRef = useRef<HTMLDivElement | null>(null);
+
+  const isPrevDisabled = scrollPosition <= 0;
+  const isNextDisabled = swiperRef.current
+    ? scrollPosition >=
+      swiperRef.current.scrollWidth - swiperRef.current.offsetWidth
+    : true;
 
   const nextSlide = () => {
     if (swiperRef.current) {
@@ -127,8 +130,16 @@ export const Swiper: React.FC<SwiperProps> = ({ slides }) => {
         })}
       </div>
 
-      <NavigationButton direction="left" onClick={prevSlide} />
-      <NavigationButton direction="right" onClick={nextSlide} />
+      <NavigationButton
+        direction="left"
+        onClick={prevSlide}
+        isDisabled={isPrevDisabled}
+      />
+      <NavigationButton
+        direction="right"
+        onClick={nextSlide}
+        isDisabled={isNextDisabled}
+      />
     </div>
   );
 };
