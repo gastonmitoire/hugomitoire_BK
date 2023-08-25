@@ -105,7 +105,7 @@ export const Swiper: React.FC<SwiperProps> = ({ slides }) => {
     <div className="relative w-full h-full">
       <div
         ref={swiperRef}
-        className="w-full h-min m-auto whitespace-nowrap snap-x snap-mandatory overflow-x-scroll overflow-y-hidden"
+        className="w-full h-min m-auto whitespace-nowrap snap-x snap-mandatory overflow-x-scroll overflow-y-hidden scrollbar-hide"
         style={{ overflowX: "scroll", whiteSpace: "nowrap" }} // Agrega estos estilos
       >
         {slides.map((slide, index) => {
