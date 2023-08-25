@@ -6,6 +6,7 @@ import { db } from "~/utils/db.server";
 import { Hero } from "~/components/hero";
 import { Button } from "~/components/button";
 import { Slider } from "~/components/slider";
+import { Swiper } from "~/components/swiper";
 
 export const meta: V2_MetaFunction = () => {
   return [{ title: "New Remix App" }];
@@ -47,6 +48,45 @@ export default function Index() {
     );
   }
 
+  const slides = [
+    <img
+      key="1"
+      alt="slide"
+      src={books[0].cover}
+      className="h-[375px] object-cover"
+    />,
+    <img
+      key="2"
+      alt="slide"
+      src={books[1].cover}
+      className="h-[375px] object-cover"
+    />,
+    <img
+      key="3"
+      alt="slide"
+      src={books[0].cover}
+      className="h-[375px] object-cover"
+    />,
+    <img
+      key="4"
+      alt="slide"
+      src={books[1].cover}
+      className="h-[375px] object-cover"
+    />,
+    <img
+      key="3"
+      alt="slide"
+      src={books[0].cover}
+      className="h-[375px] object-cover"
+    />,
+    <img
+      key="4"
+      alt="slide"
+      src={books[1].cover}
+      className="h-[375px] object-cover"
+    />,
+  ];
+
   return (
     <div className="flex flex-col h-auto">
       <div className="h-[90vh]">
@@ -55,13 +95,14 @@ export default function Index() {
             length={books.length}
             onChange={handleChange}
             renderItem={renderHero}
-            autoPlay
             hideProgressBar
           />
         ) : (
           "No books found"
         )}
       </div>
+
+      <Swiper slides={slides} />
     </div>
   );
 }
